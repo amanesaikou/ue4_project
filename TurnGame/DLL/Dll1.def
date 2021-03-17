@@ -1,0 +1,5 @@
+LIBRARY Dll1
+
+EXPORTS
+	DllLib::GetProperty = ?GetProperty@DllLib@@SAHHHH@Z
+	DllLib::GetDamage = ?GetDamage@DllLib@@SAMMMMM@Z
