@@ -3,7 +3,7 @@
 Version 4.24.3
 
 * * *
-## Plugins
+## 插件
 
 ### slua-unreal  
 
@@ -11,9 +11,17 @@ Version 4.24.3
 
 ### AsyncLoadingScreen  
 
-[AsyncLoadingScreen](https://github.com/truong-bui/AsyncLoadingScreen)    
+[AsyncLoadingScreen](https://github.com/truong-bui/AsyncLoadingScreen)  
 
-### 素材來源  
+## 目前開發狀況  
+
+![Alt text](/gif/Display.gif)  
+
+* * *  
+
+## 素材來源    
+
+* * *  
 
 * [OpenGameArt](https://opengameart.org/)  
 * [unity asset store](https://assetstore.unity.com/)  
