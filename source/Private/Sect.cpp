@@ -86,13 +86,29 @@ void USect::AddEquipment() {
 	}
 }
 
-void USect::AddEquipment(UEquipment* equipment) {
+void USect::AddRemoveEquipment(UEquipment* equipment) {
 	if (equipment->GetType() == EEquipmentType::Weapon)
 		weapons.Emplace(equipment);
 	else if (equipment->GetType() == EEquipmentType::Artifact)
 		artifacts.Emplace(equipment);
 	else
 		hiddenWeapons.Emplace(equipment);
+}
+
+bool USect::CanAddEquipment(UEquipment* equipment) {
+	auto GetReturn = [](TArray<UEquipment*> equipments) {
+		return equipments.Num() < 50 ? true : false;
+	};
+
+	if (equipment->GetType() == EEquipmentType::Weapon)
+		return GetReturn(weapons);
+
+	else if (equipment->GetType() == EEquipmentType::Artifact)
+		return GetReturn(artifacts);
+
+	else
+		return GetReturn(hiddenWeapons);
+
 }
 
 void USect::AddLaw() {
@@ -107,7 +123,7 @@ void USect::AddLaw() {
 		attackSkills.Emplace(temp);
 }
 
-void USect::AddLaw(UCultivationLaw* law) {
+void USect::AddRemoveLaw(UCultivationLaw* law) {
 	if (law->GetType() == ECultivationType::CultivationLaw)
 		cultivationLaws.Emplace(law);
 	else if (law->GetType() == ECultivationType::WorkoutLaw)

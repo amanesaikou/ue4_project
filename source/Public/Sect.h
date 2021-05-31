@@ -45,17 +45,20 @@ public:
 	// 加入新的裝備
 	void AddEquipment();
 
-	//UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	// 加回弟子脫下的裝備
-	void AddEquipment(UEquipment* equipment);
+	void AddRemoveEquipment(UEquipment* equipment);
+
+	UFUNCTION(BlueprintCallable)
+	bool CanAddEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
 	// 加入新的功法
 	void AddLaw();
 
-	//UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	// 加回弟子脫下的功法
-	void AddLaw(UCultivationLaw* law);
+	void AddRemoveLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
 	// 獲取所有弟子

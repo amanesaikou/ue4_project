@@ -76,6 +76,9 @@ public:
 
 	void RemoveAll();
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveEquipment(UEquipment* equipment);
+
 	class UMyGameInstance* GetGameInstance() const;
 
 	UFUNCTION(BlueprintCallable)

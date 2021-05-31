@@ -183,7 +183,7 @@ void UEliteDisciple::WearEquipment(const TArray<UEquipment*>& equipments, int32 
 void UEliteDisciple::WearWeapon(const TArray<UEquipment*>& weapons, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (weapon != NULL)
-		MyGameInstance->GetSect()->AddEquipment(weapon);
+		MyGameInstance->GetSect()->AddRemoveEquipment(weapon);
 	weapon = weapons[index];
 	MyGameInstance->GetSect()->RemoveWeapon(index);
 }
@@ -192,7 +192,7 @@ void UEliteDisciple::WearWeapon(const TArray<UEquipment*>& weapons, int32 index)
 void UEliteDisciple::WearArtifact(const TArray<UEquipment*>& artifacts, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (artifact != NULL)
-		MyGameInstance->GetSect()->AddEquipment(artifact);
+		MyGameInstance->GetSect()->AddRemoveEquipment(artifact);
 	artifact = artifacts[index];
 	MyGameInstance->GetSect()->RemoveArtifact(index);
 }
@@ -200,7 +200,7 @@ void UEliteDisciple::WearArtifact(const TArray<UEquipment*>& artifacts, int32 in
 void UEliteDisciple::WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (hiddenWeapon != NULL)
-		MyGameInstance->GetSect()->AddEquipment(hiddenWeapon);
+		MyGameInstance->GetSect()->AddRemoveEquipment(hiddenWeapon);
 	hiddenWeapon = hiddenWeapons[index];
 	MyGameInstance->GetSect()->RemoveHiddenWeapon(index);
 }
@@ -223,7 +223,7 @@ void UEliteDisciple::UseLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
 void UEliteDisciple::UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (cultivationLaw != NULL)
-		MyGameInstance->GetSect()->AddLaw(cultivationLaw);
+		MyGameInstance->GetSect()->AddRemoveLaw(cultivationLaw);
 	cultivationLaw = laws[index];
 	MyGameInstance->GetSect()->RemoveCultivationLaw(index);
 	//Apply(laws, index, cultivationLaw);
@@ -232,7 +232,7 @@ void UEliteDisciple::UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int
 void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (workoutLaw != NULL)
-		MyGameInstance->GetSect()->AddLaw(workoutLaw);
+		MyGameInstance->GetSect()->AddRemoveLaw(workoutLaw);
 	workoutLaw = laws[index];
 	MyGameInstance->GetSect()->RemoveWorkoutLaw(index);
 	//Apply(laws, index, workoutLaw);
@@ -241,7 +241,7 @@ void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 i
 void UEliteDisciple::UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 index) {
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	if (attackSkill != NULL)
-		MyGameInstance->GetSect()->AddLaw(attackSkill);
+		MyGameInstance->GetSect()->AddRemoveLaw(attackSkill);
 	attackSkill = laws[index];
 	MyGameInstance->GetSect()->RemoveAttackSkill(index);
 	//Apply(laws, index, attackSkill);
@@ -252,12 +252,12 @@ void UEliteDisciple::RemoveAll() {
 
 	auto RemoveEquipment = [&](UEquipment* equipment) {
 		if (equipment != NULL)
-			MyGameInstance->GetSect()->AddEquipment(equipment);
+			MyGameInstance->GetSect()->AddRemoveEquipment(equipment);
 	};
 
 	auto RemoveLaw = [&](UCultivationLaw* law) {
 		if (law != NULL)
-			MyGameInstance->GetSect()->AddLaw(law);
+			MyGameInstance->GetSect()->AddRemoveLaw(law);
 	};
 
 	RemoveEquipment(weapon);
@@ -266,6 +266,15 @@ void UEliteDisciple::RemoveAll() {
 	RemoveLaw(cultivationLaw);
 	RemoveLaw(workoutLaw);
 	RemoveLaw(attackSkill);
+}
+
+void UEliteDisciple::RemoveEquipment(UEquipment* equipment) {
+	if (equipment->GetType() == EEquipmentType::Weapon)
+		weapon = NULL;
+	else if (equipment->GetType() == EEquipmentType::Artifact)
+		artifact = NULL;
+	else
+		hiddenWeapon = NULL;
 }
 
 UMyGameInstance* UEliteDisciple::GetGameInstance() const {

@@ -13,7 +13,7 @@
  */
 
 // 共通屬性
-// 給一般弟子 菁英弟子 裝備 祕笈等類別使用
+// 菁英弟子 裝備 祕笈等類別使用
 USTRUCT(BlueprintType)
 struct FCommonAttribute : public FTableRowBase {
 

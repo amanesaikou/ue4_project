@@ -1,0 +1,4 @@
+5/30 
+			ui部分
+將藍圖EquipmentInfo的大部分邏輯用Lua實現，新增查看強化與精煉等級
+將藍圖UseEquipment的部分邏輯用Lua實現，新增根據物品種類修改上方文字
