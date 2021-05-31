@@ -277,6 +277,15 @@ void UEliteDisciple::RemoveEquipment(UEquipment* equipment) {
 		hiddenWeapon = NULL;
 }
 
+void UEliteDisciple::RemoveLaw(UCultivationLaw* law) {
+	if (law->GetType() == ECultivationType::CultivationLaw)
+		cultivationLaw = NULL;
+	else if (law->GetType() == ECultivationType::WorkoutLaw)
+		workoutLaw = NULL;
+	else
+		attackSkill = NULL;
+}
+
 UMyGameInstance* UEliteDisciple::GetGameInstance() const {
 	UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
 	return MyGameInstance;

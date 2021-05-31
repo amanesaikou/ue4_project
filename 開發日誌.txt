@@ -1,4 +1,9 @@
 5/30 
-			ui部分
 將藍圖EquipmentInfo的大部分邏輯用Lua實現，新增查看強化與精煉等級
 將藍圖UseEquipment的部分邏輯用Lua實現，新增根據物品種類修改上方文字
+
+5/31
+修正弟子與功法排序
+新增裝備脫下與功法放棄修練功能
+新增招收弟子的icon
+將藍圖UEquipmentCheckUi的大部分邏輯用Lua實現

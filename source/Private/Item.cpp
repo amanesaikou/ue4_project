@@ -210,6 +210,14 @@ bool UCultivationLaw::CanLevelUp(const int32& spiritStone, int32 cost) {
 	return spiritStone > cost ? true : false ;
 }
 
+int32 UCultivationLaw::GetLevel() const {
+	return lawLevel;
+}
+
+void UCultivationLaw::SetLevelZero() {
+	lawLevel = 0;
+}
+
 FString UCultivationLaw::GetLevelName() const {
 	const char* path = UPath::GetLawLevelPath();
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));

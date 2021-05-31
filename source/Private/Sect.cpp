@@ -108,7 +108,6 @@ bool USect::CanAddEquipment(UEquipment* equipment) {
 
 	else
 		return GetReturn(hiddenWeapons);
-
 }
 
 void USect::AddLaw() {
@@ -124,12 +123,28 @@ void USect::AddLaw() {
 }
 
 void USect::AddRemoveLaw(UCultivationLaw* law) {
+	law->SetLevelZero();
 	if (law->GetType() == ECultivationType::CultivationLaw)
 		cultivationLaws.Emplace(law);
 	else if (law->GetType() == ECultivationType::WorkoutLaw)
 		workoutLaws.Emplace(law);
 	else
 		attackSkills.Emplace(law);
+}
+
+bool USect::CanAddLaw(UCultivationLaw* law) {
+	auto GetReturn = [](TArray<UCultivationLaw*> laws) {
+		return laws.Num() < 50 ? true : false;
+	};
+
+	if (law->GetType() == ECultivationType::CultivationLaw)
+		return GetReturn(cultivationLaws);
+
+	else if (law->GetType() == ECultivationType::WorkoutLaw)
+		return GetReturn(workoutLaws);
+
+	else
+		return GetReturn(attackSkills);
 }
 
 TArray<UEliteDisciple*> USect::GetEliteDisciples() {
@@ -211,16 +226,27 @@ int32 USect::GetFinallyDefense() {
 
 void USect::DiscipleSort() {
 	eliteDisciples.Sort([](const UEliteDisciple& A, const UEliteDisciple& B) {
+		/*
+			弟子排序先比資質
+			相同再比命宮數量
+			相同再比星辰數量
+		*/
+		if (A.rarity == B.rarity) {
+			if (A.GetLifePalace() == B.GetLifePalace())
+				return A.GetStar() > B.GetStar();
+			else
+				return A.GetLifePalace() > B.GetLifePalace();
+		}
 		return A.rarity < B.rarity;
 	});
 }
 
 void USect::CultivationLawSort(int32 index) {
 	auto Sort = [](TArray<UCultivationLaw*>& laws) {
+		// 功法排序比id
 		laws.Sort([](const UCultivationLaw& A, const UCultivationLaw& B) {
-			return A.rarity < B.rarity;
+			return A.GetID() < B.GetID();
 		});
-		return;
 	};
 	switch (index) {
 		case 1:
@@ -237,6 +263,11 @@ void USect::CultivationLawSort(int32 index) {
 
 void USect::EquipmentSort(int32 index) {
 	auto Sort = [](TArray<UEquipment*>& equipments) {
+		/*
+			裝備排序先比id
+			相同再比強化等級
+			相同再比精煉等級
+		*/
 		equipments.Sort([](const UEquipment& A, const UEquipment& B) {
 			if (A.GetID() == B.GetID()) {
 				if (A.GetEnhancementLevel() == B.GetEnhancementLevel())
@@ -247,7 +278,6 @@ void USect::EquipmentSort(int32 index) {
 			else
 				return A.GetID() < B.GetID();
 		});
-		return;
 	};
 	switch (index) {
 	case 1:

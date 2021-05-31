@@ -186,6 +186,10 @@ public:
 	// 可以修練嗎?
 	bool CanLevelUp(const int32& spiritStone, int32 cost);
 
+	int32 GetLevel() const;
+
+	void SetLevelZero();
+
 	UFUNCTION(BlueprintCallable)
 	// 獲取功法修練層次
 	FString GetLevelName() const;

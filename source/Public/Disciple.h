@@ -79,6 +79,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveEquipment(UEquipment* equipment);
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveLaw(UCultivationLaw* law);
+
 	class UMyGameInstance* GetGameInstance() const;
 
 	UFUNCTION(BlueprintCallable)

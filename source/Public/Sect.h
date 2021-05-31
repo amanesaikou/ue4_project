@@ -61,6 +61,9 @@ public:
 	void AddRemoveLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
+	bool CanAddLaw(UCultivationLaw* law);
+
+	UFUNCTION(BlueprintCallable)
 	// 獲取所有弟子
 	TArray<UEliteDisciple*> GetEliteDisciples();
 
