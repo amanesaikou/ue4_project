@@ -9,6 +9,7 @@
 UEliteDisciple::UEliteDisciple() {
 	DecideRarity();
 	DecideName();
+	SetImageIndex();
 	attriute.SetAttack(500 * (6 - uint8(rarity)));
 	attriute.SetHealth(1000 * (6 - uint8(rarity)));
 	attriute.SetDefense(300 * (6 - uint8(rarity)));
@@ -17,11 +18,35 @@ UEliteDisciple::UEliteDisciple() {
 }
 
 void UEliteDisciple::DecideName() {
-	attriute.SetName("aaa");
+	FString name = "";
+	name += GetName(gSurname);
+	name += GetName(gName);
+	attriute.SetName(name);
 }
 
+FString UEliteDisciple::GetName(const char* path) const {
+	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
+	TArray<FName> rowNames = pDataTable->GetRowNames();
+	int32 row = FMath::RandRange(0, rowNames.Num() - 1);
+	FCommonString* temp = pDataTable->FindRow<FCommonString>(UDatasetBPLibrary::FromIntToFName(row), "");
+	FString name = temp->GetString();
+	return name;
+}
+
+void UEliteDisciple::SetImageIndex() {
+	int32 index = FMath::RandRange(0, 5);
+	attriute.SetID(index);
+}
+
+int32 UEliteDisciple::GetImageIndex() const {
+	return attriute.GetID();
+}
+
+//FString UEliteDisciple::GetName() const {
+//}
+
 void UEliteDisciple::DecideRarity() {
-	rarity = UTypeBPLibrary::DecideRarity<EDiscipleRarityType>(UPath::GetDiscipleRarityPath());
+	rarity = UTypeBPLibrary::DecideRarity<EDiscipleRarityType>(gDiscipleRarity);
 }
 
 void UEliteDisciple::DecideLifePalace() {
@@ -78,7 +103,7 @@ EDiscipleRarityType UEliteDisciple::GetRarity() const {
 }
 
 FString UEliteDisciple::GetRarityName() const {
-	return UTypeBPLibrary::GetRarityName<EDiscipleRarityType>(UPath::GetDiscipleRarityPath(), rarity);
+	return UTypeBPLibrary::GetRarityName<EDiscipleRarityType>(gDiscipleRarity, rarity);
 }
 
 int32 UEliteDisciple::GetFinallyAttack() const {
@@ -178,6 +203,8 @@ void UEliteDisciple::WearEquipment(const TArray<UEquipment*>& equipments, int32 
 			WearHiddenWeapon(equipments, index);
 			break;
 	}
+	UMyGameInstance* MyGameInstance = GetGameInstance();
+	MyGameInstance->GetSect()->RemoveEquipment(equipments[index], index);
 }
 
 void UEliteDisciple::WearWeapon(const TArray<UEquipment*>& weapons, int32 index) {
@@ -185,7 +212,6 @@ void UEliteDisciple::WearWeapon(const TArray<UEquipment*>& weapons, int32 index)
 	if (weapon != NULL)
 		MyGameInstance->GetSect()->AddRemoveEquipment(weapon);
 	weapon = weapons[index];
-	MyGameInstance->GetSect()->RemoveWeapon(index);
 }
 
 
@@ -194,7 +220,6 @@ void UEliteDisciple::WearArtifact(const TArray<UEquipment*>& artifacts, int32 in
 	if (artifact != NULL)
 		MyGameInstance->GetSect()->AddRemoveEquipment(artifact);
 	artifact = artifacts[index];
-	MyGameInstance->GetSect()->RemoveArtifact(index);
 }
 
 void UEliteDisciple::WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, int32 index) {
@@ -202,7 +227,6 @@ void UEliteDisciple::WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, 
 	if (hiddenWeapon != NULL)
 		MyGameInstance->GetSect()->AddRemoveEquipment(hiddenWeapon);
 	hiddenWeapon = hiddenWeapons[index];
-	MyGameInstance->GetSect()->RemoveHiddenWeapon(index);
 }
 
 void UEliteDisciple::UseLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -226,7 +250,6 @@ void UEliteDisciple::UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int
 		MyGameInstance->GetSect()->AddRemoveLaw(cultivationLaw);
 	cultivationLaw = laws[index];
 	MyGameInstance->GetSect()->RemoveCultivationLaw(index);
-	//Apply(laws, index, cultivationLaw);
 }
 
 void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -235,7 +258,6 @@ void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 i
 		MyGameInstance->GetSect()->AddRemoveLaw(workoutLaw);
 	workoutLaw = laws[index];
 	MyGameInstance->GetSect()->RemoveWorkoutLaw(index);
-	//Apply(laws, index, workoutLaw);
 }
 
 void UEliteDisciple::UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -244,7 +266,6 @@ void UEliteDisciple::UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 
 		MyGameInstance->GetSect()->AddRemoveLaw(attackSkill);
 	attackSkill = laws[index];
 	MyGameInstance->GetSect()->RemoveAttackSkill(index);
-	//Apply(laws, index, attackSkill);
 }
 
 void UEliteDisciple::RemoveAll() {
@@ -319,7 +340,7 @@ int32 UEliteDisciple::GetLifePalace() const {
 }
 
 FString UEliteDisciple::GetLifePalaceTitle() const {
-	const char* path = UPath::GetLifePalaceTitlePath();
+	const char* path = gLifePalaceTitle;
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	FCommonString* temp = pDataTable->FindRow<FCommonString>(UDatasetBPLibrary::FromIntToFName(lifePalace), "");
 	FString title = temp->GetString();
@@ -331,7 +352,7 @@ int32 UEliteDisciple::GetStar() const {
 }
 
 FString UEliteDisciple::GetStarTitle() const {
-	const char* path = UPath::GetStarTitlePath();
+	const char* path = gStarTitle;
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	FCommonString* temp = pDataTable->FindRow<FCommonString>(UDatasetBPLibrary::FromIntToFName(stars), "");
 	FString title = temp->GetString();

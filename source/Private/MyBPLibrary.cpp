@@ -124,31 +124,3 @@ const char* UDatasetBPLibrary::GetTablePath(const char* path, int32 index) {
 FName UDatasetBPLibrary::FromIntToFName(int32 num) {
 	return FName(*FString::FromInt(num));
 }
-
-const char* UPath::GetLawLevelPath() {
-	return "DataTable'/Game/StarterContent/Datatable/LawLevel/LawLevel.LawLevel'";
-}
-
-const char* UPath::GetItemRarityPath() {
-	return "DataTable'/Game/StarterContent/Datatable/Rarity/ItemRarity.ItemRarity'";
-}
-
-const char* UPath::GetDiscipleRarityPath() {
-	return "DataTable'/Game/StarterContent/Datatable/Rarity/DiscipleRarity.DiscipleRarity'";
-}
-
-const char* UPath::GetLawTablePath() {
-	return "DataTable'/Game/StarterContent/Datatable/ItemTablePath/LawTablePath.LawTablePath'";
-}
-
-const char* UPath::GetEquipmentTablePath() {
-	return "DataTable'/Game/StarterContent/Datatable/ItemTablePath/EquipmentTablePath.EquipmentTablePath'";
-}
-
-const char* UPath::GetLifePalaceTitlePath() {
-	return "DataTable'/Game/StarterContent/Datatable/Title/LifePalaceTitle.LifePalaceTitle'";
-}
-
-const char* UPath::GetStarTitlePath() {
-	return "DataTable'/Game/StarterContent/Datatable/Title/StarTitle.StarTitle'";
-}

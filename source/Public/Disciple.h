@@ -24,6 +24,16 @@ public:
 	// 設定弟子姓名 須修改
 	void DecideName();
 
+	// 獲取弟子的姓氏與名字進行組合
+	FString GetName(const char* path) const;
+
+	// 設定弟子頭像索引值
+	void SetImageIndex();
+
+	UFUNCTION(BlueprintCallable)
+	// 獲取弟子頭像索引值
+	int32 GetImageIndex() const;
+
 	// 決定弟子資質
 	void DecideRarity();
 
@@ -34,84 +44,110 @@ public:
 	void DecideStar();
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取弟子名稱
 	FString GetName() const;
 
-	// 獲取資質
 	UFUNCTION(BlueprintCallable)
+	// 獲取資質
 	EDiscipleRarityType GetRarity() const;
 	
-	// 獲取資質名稱
 	UFUNCTION(BlueprintCallable)
+	// 獲取資質名稱
 	FString GetRarityName() const;
 
 	UFUNCTION(BlueprintCallable)
-	//
+	// 獲取最終攻擊
 	int32 GetFinallyAttack() const;
 
 	UFUNCTION(BlueprintCallable)
-	//
+	// 獲取最終生命
 	int32 GetFinallyHealth() const;
 
 	UFUNCTION(BlueprintCallable)
-	//
+	// 獲取最終防禦
 	int32 GetFinallyDefense() const;
 
 	// 命宮與星辰加成
 	float GetBuff() const;
 
-	// 穿裝備
 	UFUNCTION(BlueprintCallable)
+	// 穿裝備
 	void WearEquipment(const TArray<UEquipment*>& weapons, int32 index);
+
+	// 穿武器
 	void WearWeapon(const TArray<UEquipment*>& weapons, int32 index);
+
+	// 穿法寶
 	void WearArtifact(const TArray<UEquipment*>& artifacts, int32 index);
+
+	// 穿暗器
 	void WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, int32 index);
 
-	// 使用功法
+	// 修練功法
 	UFUNCTION(BlueprintCallable)
 	void UseLaw(const TArray<UCultivationLaw*>& laws, int32 index);
 
+	// 修練修練法
 	void UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int32 index);
+
+	// 修練鍛體法
 	void UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 index);
+
+	// 修練武技
 	void UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 index);
 
+	// 移除全部裝備與功法
 	void RemoveAll();
 
 	UFUNCTION(BlueprintCallable)
+	// 脫下裝備
 	void RemoveEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
+	// 放棄修練
 	void RemoveLaw(UCultivationLaw* law);
 
+	// 獲取GameInstance
 	class UMyGameInstance* GetGameInstance() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得武器
 	UEquipment* GetWeapon() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得法寶
 	UEquipment* GetArtifact() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得暗器
 	UEquipment* GetHiddenWeapon() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得修練法
 	UCultivationLaw* GetCultivationLaw() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得鍛體法
 	UCultivationLaw* GetWorkoutLaw() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 取得武技
 	UCultivationLaw* GetAttackSkill() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取命宮數量
 	int32 GetLifePalace() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取命宮稱號
 	FString GetLifePalaceTitle() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取星辰數量
 	int32 GetStar() const;
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取星辰稱號
 	FString GetStarTitle() const;
 
 	// 弟子資質
@@ -145,6 +181,3 @@ protected:
 	int32 stars;
 
 };
-
-//template void UEliteDisciple::Apply(const TArray<UEquipment*>& items, int32 index, UEquipment* item);
-//template void UEliteDisciple::Apply(const TArray<UCultivationLaw*>& items, int32 index, UCultivationLaw* item);

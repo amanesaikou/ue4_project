@@ -165,33 +165,33 @@ public:
 	static FName FromIntToFName(int32 num);
 };
 
-class DEVELOP_API UPath {
+// 功法層次表的路徑
+constexpr const char* gLawLevel = "DataTable'/Game/StarterContent/Datatable/LawLevel/LawLevel.LawLevel'";
 
-public:
-	// 功法層次表的路徑
-	static const char* GetLawLevelPath();
+// 物品稀有度表路徑
+constexpr const char* gItemRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/ItemRarity.ItemRarity'";
 
-	// 物品稀有度表路徑
-	static const char* GetItemRarityPath();
+// 弟子資質表路徑
+constexpr const char* gDiscipleRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/DiscipleRarity.DiscipleRarity'";
 
-	// 弟子資質表路徑
-	static const char* GetDiscipleRarityPath();
+// 功法屬性路徑表
+constexpr const char* gLawTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/LawTablePath.LawTablePath'";
 
-	// 功法屬性路徑表
-	static const char* GetLawTablePath();
+// 裝備屬性路徑表
+constexpr const char* gEquipmentTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/EquipmentTablePath.EquipmentTablePath'";
 
-	// 裝備屬性路徑表
-	static const char* GetEquipmentTablePath();
+// 命宮路徑表
+constexpr const char* gLifePalaceTitle = "DataTable'/Game/StarterContent/Datatable/Title/LifePalaceTitle.LifePalaceTitle'";
 
-	// 裝備屬性路徑表
-	static const char* GetLifePalaceTitlePath();
+// 星辰路徑表
+constexpr const char* gStarTitle = "DataTable'/Game/StarterContent/Datatable/Title/StarTitle.StarTitle'";
 
-	// 裝備屬性路徑表
-	static const char* GetStarTitlePath();
-};
+// 姓氏路徑表
+constexpr const char* gSurname = "DataTable'/Game/StarterContent/Datatable/Name/Surname.Surname'";
 
-// 實例化
-//template FString UTypeBPLibrary::GetRarityName(const char* tablePath, int32 rarity);
+// 名字路徑表
+constexpr const char* gName = "DataTable'/Game/StarterContent/Datatable/Name/Name.Name'";
+
 template FString UTypeBPLibrary::GetRarityName(const char* tablePath, EItemRarityType rarity);
 template FString UTypeBPLibrary::GetRarityName(const char* tablePath, EDiscipleRarityType rarity);
 

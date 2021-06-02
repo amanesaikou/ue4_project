@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Disciple.h"
+#include <functional> // std::functional
 #include "Sect.generated.h"
 
 /**
@@ -46,10 +47,11 @@ public:
 	void AddEquipment();
 
 	UFUNCTION(BlueprintCallable)
-	// 加回弟子脫下的裝備
+	// 加回弟子脫下的裝備或加入新的裝備
 	void AddRemoveEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
+	// 可以加入裝備嗎
 	bool CanAddEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
@@ -57,10 +59,11 @@ public:
 	void AddLaw();
 
 	UFUNCTION(BlueprintCallable)
-	// 加回弟子脫下的功法
+	// 加回弟子放棄修練的功法或加入新的功法
 	void AddRemoveLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
+	// 可以加入功法嗎
 	bool CanAddLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
@@ -92,6 +95,10 @@ public:
 	TArray<UCultivationLaw*> GetAttackSkills();
 
 	UFUNCTION(BlueprintCallable)
+	// 移除裝備
+	void RemoveEquipment(UEquipment* equipment, int32 index);
+
+	UFUNCTION(BlueprintCallable)
 	// 移除武器
 	void RemoveWeapon(int32 index);
 
@@ -119,13 +126,18 @@ public:
 	// 使用靈石
 	void UseSpiritStone(int32 cost);
 
+	void AddAttribute(int32& attribute, std::function<int32(UEliteDisciple*)> Get);
+
 	UFUNCTION(BlueprintCallable)
+	// 獲取最終攻擊
 	int32 GetFinallyAttack();
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取最終生命
 	int32 GetFinallyHealth();
 
 	UFUNCTION(BlueprintCallable)
+	// 獲取最終防禦
 	int32 GetFinallyDefense();
 
 	UFUNCTION(BlueprintCallable)
@@ -144,8 +156,13 @@ public:
 	// 增加靈石
 	void AddSpiritStone(int32 num);
 
+	UFUNCTION(BlueprintCallable)
+	// 獲取靈石
+	int32 GetSpiritStone() const;
+
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 弟子
 	TArray<UEliteDisciple*> eliteDisciples;
 
 	// uobject建立名稱數字
@@ -154,27 +171,33 @@ protected:
 	int32 lawNums = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32 money;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 靈石
 	int32 spiritStone;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 武器
 	TArray<UEquipment*> weapons;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 法寶
 	TArray<UEquipment*> artifacts;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 暗器
 	TArray<UEquipment*> hiddenWeapons;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 修練法
 	TArray<UCultivationLaw*> cultivationLaws;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 鍛體法
 	TArray<UCultivationLaw*> workoutLaws;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 武技
 	TArray<UCultivationLaw*> attackSkills;
 
 };
+
+void AddAttribute(int32& attribute, int32 start, int32 end, TArray<UEliteDisciple*>& disciples, std::function<int32(UEliteDisciple*)> Get);

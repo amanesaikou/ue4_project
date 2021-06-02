@@ -31,6 +31,10 @@ int32 FCommonAttribute::GetDefense() const {
 	return defense;
 }
 
+void FCommonAttribute::SetID(int32 tempID) {
+	id = tempID;
+}
+
 void FCommonAttribute::SetName(FString tempName) {
 	name = tempName;
 }
@@ -61,7 +65,7 @@ int32 UItem::GetID() const {
 }
 
 void UItem::DecideRarity() {
-	rarity = UTypeBPLibrary::DecideRarity<EItemRarityType>(UPath::GetItemRarityPath());
+	rarity = UTypeBPLibrary::DecideRarity<EItemRarityType>(gItemRarity);
 }
 
 uint8 UItem::GetRarity() const {
@@ -74,7 +78,7 @@ FString UItem::GetName() const {
 
 FString UItem::GetRarityName() const {
 	//return UTypeBPLibrary::GetItemRarityName(rarity);
-	return UTypeBPLibrary::GetRarityName(UPath::GetItemRarityPath(), rarity);
+	return UTypeBPLibrary::GetRarityName(gItemRarity, rarity);
 }
 
 int32 UItem::GetPrice() const {
@@ -100,7 +104,7 @@ EEquipmentType UEquipment::GetType() const {
 void UEquipment::DecideContent() {
 	// 3種裝備 7種階級
 	int32 index = int32(uint8(rarity) + uint8(equipmentType) * 7);
-	const char* path = UDatasetBPLibrary::GetTablePath(UPath::GetEquipmentTablePath(), index);
+	const char* path = UDatasetBPLibrary::GetTablePath(gEquipmentTablePath, index);
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	TArray<FName> rowNames = pDataTable->GetRowNames();
 	int32 random = FMath::RandRange(0, rowNames.Num() - 1);
@@ -187,7 +191,7 @@ void UCultivationLaw::DecideType() {
 void UCultivationLaw::DecideLaw() {
 	// 3種功法 7種階級
 	int32 index = int32(uint8(rarity) + uint8(cultivationType) * 7);
-	const char* path = UDatasetBPLibrary::GetTablePath(UPath::GetLawTablePath(), index);
+	const char* path = UDatasetBPLibrary::GetTablePath(gLawTablePath, index);
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	TArray<FName> rowNames = pDataTable->GetRowNames();
 	int32 random = FMath::RandRange(0, rowNames.Num() - 1);
@@ -219,7 +223,7 @@ void UCultivationLaw::SetLevelZero() {
 }
 
 FString UCultivationLaw::GetLevelName() const {
-	const char* path = UPath::GetLawLevelPath();
+	const char* path = gLawLevel;
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	FCommonData* data = pDataTable->FindRow<FCommonData>(UDatasetBPLibrary::FromIntToFName(lawLevel), "");
 	FString name = data->GetName();
@@ -227,7 +231,7 @@ FString UCultivationLaw::GetLevelName() const {
 }
 
 int32 UCultivationLaw::GetLevelUpCost() const {
-	const char* path = UPath::GetLawLevelPath();
+	const char* path = gLawLevel;
 	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
 	FCommonData* data = pDataTable->FindRow<FCommonData>(UDatasetBPLibrary::FromIntToFName(lawLevel), "");
 	int32 cost = data->GetNumber(); 

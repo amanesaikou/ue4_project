@@ -16,6 +16,7 @@ end
 
 function ui:Construct()
     self.bHasScriptImplementedTick = true
+    self:SetImage()
     self:SetColor()
     self:SetText()
 end

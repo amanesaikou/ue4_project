@@ -2,9 +2,9 @@
 
 
 #include "Sect.h"
+#include <thread> // std::thread
 
 USect::USect() {
-	money = 1000000;
 	spiritStone = 100000;
 }
 
@@ -72,17 +72,11 @@ void USect::AddEquipment() {
 	FString objectName = "UEquipment";
 	objectName.AppendInt(equipmentNums++);
 	UEquipment* temp = NewObject<UEquipment>(this, FName(*objectName));
-	if (temp->GetType() == EEquipmentType::Weapon) {
-		if(weapons.Num() < 50)
-			weapons.Emplace(temp);
-	}
-	else if (temp->GetType() == EEquipmentType::Artifact) {
-		if (artifacts.Num() < 50)
-			artifacts.Emplace(temp);
-	}
+	if (CanAddEquipment(temp) == true)
+		AddRemoveEquipment(temp);
 	else {
-		if (hiddenWeapons.Num() < 50)
-			hiddenWeapons.Emplace(temp);
+		AddSpiritStone(temp->GetPrice());
+		temp = NULL;
 	}
 }
 
@@ -114,12 +108,12 @@ void USect::AddLaw() {
 	FString objectName = "UCultivationLaw";
 	objectName.AppendInt(lawNums++);
 	UCultivationLaw* temp = NewObject<UCultivationLaw>(this, FName(*objectName));
-	if(temp->GetType() == ECultivationType::CultivationLaw)
-		cultivationLaws.Emplace(temp);
-	else if (temp->GetType() == ECultivationType::WorkoutLaw)
-		workoutLaws.Emplace(temp);
-	else
-		attackSkills.Emplace(temp);
+	if (CanAddLaw(temp) == true)
+		AddRemoveLaw(temp);
+	else {
+		AddSpiritStone(temp->GetPrice());
+		temp = NULL;
+	}
 }
 
 void USect::AddRemoveLaw(UCultivationLaw* law) {
@@ -175,6 +169,23 @@ TArray<UCultivationLaw*> USect::GetAttackSkills() {
 	return attackSkills;
 }
 
+void USect::RemoveEquipment(UEquipment* equipment, int32 index) {
+	int32 type = uint8(equipment->GetType());
+	switch (type) {
+		case 0:
+			RemoveWeapon(index);
+			break;
+		case 1:
+			RemoveArtifact(index);
+			break;
+		case 2:
+			RemoveHiddenWeapon(index);
+			break;
+		default:
+			break;
+	}
+}
+
 void USect::RemoveWeapon(int32 index) {
 	weapons.RemoveAt(index);
 }
@@ -203,24 +214,26 @@ void USect::UseSpiritStone(int32 cost) {
 	spiritStone -= cost;
 }
 
+void USect::AddAttribute(int32& attribute, std::function<int32(UEliteDisciple*)> Get){
+	for (auto& i : eliteDisciples)
+		attribute += Get(i);
+}
+
 int32 USect::GetFinallyAttack() {
 	int32 finallyAttack = 0;
-	for (auto& i : eliteDisciples)
-		finallyAttack += i->GetFinallyAttack();
+	AddAttribute(finallyAttack, &UEliteDisciple::GetFinallyAttack);
 	return finallyAttack;
 }
 
 int32 USect::GetFinallyHealth() {
 	int32 finallyHealth = 0;
-	for (auto& i : eliteDisciples)
-		finallyHealth += i->GetFinallyHealth();
+	AddAttribute(finallyHealth, &UEliteDisciple::GetFinallyHealth);
 	return finallyHealth;
 }
 
 int32 USect::GetFinallyDefense() {
 	int32 finallyDefense = 0;
-	for (auto& i : eliteDisciples)
-		finallyDefense += i->GetFinallyDefense();
+	AddAttribute(finallyDefense, &UEliteDisciple::GetFinallyDefense);
 	return finallyDefense;
 }
 
@@ -294,4 +307,8 @@ void USect::EquipmentSort(int32 index) {
 
 void USect::AddSpiritStone(int32 num) {
 	spiritStone += num;
+}
+
+int32 USect::GetSpiritStone() const {
+	return spiritStone;
 }

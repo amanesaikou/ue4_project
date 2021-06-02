@@ -24,6 +24,7 @@ end
 
 function ui:Construct()
     self.bHasScriptImplementedTick = true
+    self:SetImage()
     self:Rebuild()
     self:SetText()
     self:SetTextColor()
@@ -40,6 +41,7 @@ function ui:Rebuild()
 end
 
 function ui:SetText()
+    self:SetName()
     self:SetRarity()
     self:SetLifePalace()
     self:SetStar()
@@ -49,6 +51,11 @@ function ui:SetAttriute()
     self:SetHealth()
     self:SetAttack()
     self:SetDefense()
+end
+
+function ui:SetName()
+    local name = self.disciple:GetName()
+    self.name:SetText(name)
 end
 
 function ui:SetRarity()
@@ -87,6 +94,22 @@ function ui:SetDefense()
     self.defense:SetText(TypeChange.IntToFText(defense))
 end
 
+function ui:SetTextColor()
+    self:SetColor(self.name)
+    self:SetColor(self.rarity)
+    self:SetColor(self.rarityName)
+    self:SetColor(self.healthText)
+    self:SetColor(self.health)
+    self:SetColor(self.attackText)
+    self:SetColor(self.attack)
+    self:SetColor(self.defenseText)
+    self:SetColor(self.defense)
+    self:SetColor(self.lifePalaceNum)
+    self:SetColor(self.lifePalace)
+    self:SetColor(self.starNums)
+    self:SetColor(self.starName)
+end
+
 
 function ui:Destruct()
     print(collectgarbage("count"))
@@ -99,14 +122,19 @@ function ui:Clear()
     self.closeButton.OnClicked:Clear()
     self.closeButton = nil
     self.disciple = nil
+    self.name = nil
+    self.rarity = nil
     self.rarityName = nil
-    self.lifePalace = nil
-    self.lifePalaceNum = nil
-    self.starName = nil
-    self.starNums = nil
+    self.healthText = nil
     self.health = nil
+    self.attackText = nil
     self.attack = nil
+    self.defenseText = nil
     self.defense = nil
+    self.lifePalaceNum = nil
+    self.lifePalace = nil
+    self.starNums = nil
+    self.starName = nil
     self.index = nil
 end
 

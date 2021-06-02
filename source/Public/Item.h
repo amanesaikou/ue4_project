@@ -28,6 +28,7 @@ struct FCommonAttribute : public FTableRowBase {
 	int32 GetHealth() const;
 	int32 GetDefense() const;
 
+	void SetID(int32 tempID);
 	void SetName(FString tempName);
 	void SetAttack(int32 tempAttack);
 	void SetHealth(int32 tempHealth);
@@ -69,6 +70,9 @@ public:
 	// 物品稀有度
 	EItemRarityType rarity;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetPrice() const;
+
 protected:
 	// 物品屬性
 	UPROPERTY(BlueprintReadWrite)
@@ -86,9 +90,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	FString GetRarityName() const;
-
-	UFUNCTION(BlueprintCallable)
-	int32 GetPrice() const;
 };
 
 UCLASS(BlueprintType)
