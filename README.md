@@ -29,8 +29,14 @@ Version 4.24.3
 
 ## 目前開發狀況  
 
-![Alt text](/gif/Display.gif)  
-
+### 根據表產生弟子姓名  
+![Alt text](/gif/Name.gif)  
+### 排序  
+![Alt text](/gif/Sort.gif)  
+### 弟子穿上裝備和選擇修練功法  
+![Alt text](/gif/UseItem.gif) 
+### 強化裝備及修練功法和脫下裝備跟放棄修練功法    
+![Alt text](/gif/Enhanceandremove.gif)  
 * * *  
 
 ## 素材來源    
