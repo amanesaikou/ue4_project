@@ -47,6 +47,14 @@ enum class EDiscipleRarityType : uint8 {
 	Normal			= 5,	// 一般		48%
 };
 
+// 靈獸天賦種類
+UENUM(BlueprintType)
+enum class EPassiveSkill : uint8 {
+	Health	= 0,
+	Attack	= 1,
+	Defense = 2,
+};
+
 // 共用資料結構
 USTRUCT(BlueprintType)
 struct FCommonData : public FTableRowBase {
@@ -164,33 +172,6 @@ public:
 	//
 	static FName FromIntToFName(int32 num);
 };
-
-// 功法層次表的路徑
-constexpr const char* gLawLevel = "DataTable'/Game/StarterContent/Datatable/LawLevel/LawLevel.LawLevel'";
-
-// 物品稀有度表路徑
-constexpr const char* gItemRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/ItemRarity.ItemRarity'";
-
-// 弟子資質表路徑
-constexpr const char* gDiscipleRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/DiscipleRarity.DiscipleRarity'";
-
-// 功法屬性路徑表
-constexpr const char* gLawTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/LawTablePath.LawTablePath'";
-
-// 裝備屬性路徑表
-constexpr const char* gEquipmentTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/EquipmentTablePath.EquipmentTablePath'";
-
-// 命宮路徑表
-constexpr const char* gLifePalaceTitle = "DataTable'/Game/StarterContent/Datatable/Title/LifePalaceTitle.LifePalaceTitle'";
-
-// 星辰路徑表
-constexpr const char* gStarTitle = "DataTable'/Game/StarterContent/Datatable/Title/StarTitle.StarTitle'";
-
-// 姓氏路徑表
-constexpr const char* gSurname = "DataTable'/Game/StarterContent/Datatable/Name/Surname.Surname'";
-
-// 名字路徑表
-constexpr const char* gName = "DataTable'/Game/StarterContent/Datatable/Name/Name.Name'";
 
 template FString UTypeBPLibrary::GetRarityName(const char* tablePath, EItemRarityType rarity);
 template FString UTypeBPLibrary::GetRarityName(const char* tablePath, EDiscipleRarityType rarity);

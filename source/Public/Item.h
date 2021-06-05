@@ -187,6 +187,7 @@ public:
 	// ¥i¥H­×½m¶Ü?
 	bool CanLevelUp(const int32& spiritStone, int32 cost);
 
+	UFUNCTION(BlueprintCallable)
 	int32 GetLevel() const;
 
 	void SetLevelZero();

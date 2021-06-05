@@ -2,7 +2,7 @@
 
 
 #include "MyGameInstance.h"
-
+/*
 static uint8* ReadFile(IPlatformFile& PlatformFile, FString path, uint32& len) {
 	IFileHandle* FileHandle = PlatformFile.OpenRead(*path);
 	if (FileHandle) {
@@ -19,7 +19,8 @@ static uint8* ReadFile(IPlatformFile& PlatformFile, FString path, uint32& len) {
 
 	return nullptr;
 }
-
+*/
+/*
 static int32 PrintLog(NS_SLUA::lua_State* L) {
 	FString str;
 	size_t len;
@@ -28,8 +29,8 @@ static int32 PrintLog(NS_SLUA::lua_State* L) {
 	NS_SLUA::Log::Log("PrintLog %s", TCHAR_TO_UTF8(*str));
 	return 0;
 }
-
-UMyGameInstance::UMyGameInstance() : state("main", this) {
+*/
+UMyGameInstance::UMyGameInstance() {//state("main", this) {
 	/*
 	disciples.SetNum(10);
 	cultivationLaw = NewObject<UCultivationLaw>(this, TEXT("CultivationLaw"));
@@ -47,7 +48,7 @@ UMyGameInstance::UMyGameInstance() : state("main", this) {
 	sect = NewObject<USect>(this, TEXT("sect"));
 	CreateEnemys();
 }
-
+/*
 void UMyGameInstance::Init() {
 	state.onInitEvent.AddUObject(this, &UMyGameInstance::LuaStateInitCallback);
 	state.init();
@@ -85,13 +86,13 @@ void UMyGameInstance::LuaStateInitCallback() {
 	lua_pushcfunction(L, PrintLog);
 	lua_setglobal(L, "PrintLog");
 }
-
+*/
 void UMyGameInstance::CreateEnemys() {
 	FCommonAttribute temp;
 	temp.SetName("AAAA");
-	temp.SetAttack(10000);
-	temp.SetHealth(10000);
-	temp.SetDefense(10000);
+	temp.SetAttack(100000);
+	temp.SetHealth(1000000);
+	temp.SetDefense(100000);
 	for (int32 i = 0; i < 10; i++)
 		enemys.Emplace(temp);
 }
@@ -110,4 +111,8 @@ void UMyGameInstance::SetEnemyIndex(int32 index) {
 
 int32 UMyGameInstance::GetEnemyIndex() {
 	return enemyIndex;
+}
+
+FCommonAttribute UMyGameInstance::GetEnemy() {
+	return enemys[enemyIndex];
 }

@@ -2,6 +2,7 @@
 
 
 #include "Item.h"
+#include "Constant.h"
 
 FCommonAttribute::FCommonAttribute() {
 	id = 0;

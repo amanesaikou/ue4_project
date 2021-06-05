@@ -3,6 +3,7 @@
 #include "Disciple.h"
 #include "Engine/World.h"
 #include "MyGameInstance.h"
+#include "Constant.h"
 //#include <functional> // std::function
 //#include "..\Public\Disciple.h"
 

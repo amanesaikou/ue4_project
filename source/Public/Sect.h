@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Disciple.h"
+#include "SpiritBeast.h"
 #include <functional> // std::functional
 #include "Sect.generated.h"
 
@@ -59,6 +60,10 @@ public:
 	void AddLaw();
 
 	UFUNCTION(BlueprintCallable)
+	//加入新的靈獸
+	void AddSpiritBeast();
+
+	UFUNCTION(BlueprintCallable)
 	// 加回弟子放棄修練的功法或加入新的功法
 	void AddRemoveLaw(UCultivationLaw* law);
 
@@ -93,6 +98,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	// 獲取所有武技
 	TArray<UCultivationLaw*> GetAttackSkills();
+
+	UFUNCTION(BlueprintCallable)
+	// 獲取所有靈獸
+	TArray<USpiritBeast*> GetSpiritBeasts();
 
 	UFUNCTION(BlueprintCallable)
 	// 移除裝備
@@ -169,6 +178,7 @@ protected:
 	int32 eliteDiscipleNums = 0;
 	int32 equipmentNums = 0;
 	int32 lawNums = 0;
+	int32 spiritBeastNums = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	// 靈石
@@ -198,6 +208,10 @@ protected:
 	// 武技
 	TArray<UCultivationLaw*> attackSkills;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 靈獸
+	TArray<USpiritBeast*> spiritBeasts;
+
 };
 
-void AddAttribute(int32& attribute, int32 start, int32 end, TArray<UEliteDisciple*>& disciples, std::function<int32(UEliteDisciple*)> Get);
+//void AddAttribute(int32& attribute, int32 start, int32 end, TArray<UEliteDisciple*>& disciples, std::function<int32(UEliteDisciple*)> Get);

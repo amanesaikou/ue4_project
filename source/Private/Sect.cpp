@@ -116,6 +116,14 @@ void USect::AddLaw() {
 	}
 }
 
+void USect::AddSpiritBeast() {
+	FString objectName = "USpiritBeas";
+	objectName.AppendInt(spiritBeastNums++);
+	USpiritBeast* temp = NewObject<USpiritBeast>(this, FName(*objectName));
+	spiritBeasts.Emplace(temp);
+}
+
+
 void USect::AddRemoveLaw(UCultivationLaw* law) {
 	law->SetLevelZero();
 	if (law->GetType() == ECultivationType::CultivationLaw)
@@ -167,6 +175,10 @@ TArray<UCultivationLaw*> USect::GetWorkoutLaws() {
 
 TArray<UCultivationLaw*> USect::GetAttackSkills() {
 	return attackSkills;
+}
+
+TArray<USpiritBeast*> USect::GetSpiritBeasts() {
+	return spiritBeasts;
 }
 
 void USect::RemoveEquipment(UEquipment* equipment, int32 index) {

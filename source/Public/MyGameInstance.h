@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "slua.h"
+//#include "slua.h"
 #include "Sect.h"
 #include "MyGameInstance.generated.h"
 
@@ -19,17 +19,17 @@ class DEVELOP_API UMyGameInstance : public UGameInstance {
 public:
 	UMyGameInstance();
 
-	/** virtual function to allow custom GameInstances an opportunity to set up what it needs */
-	virtual void Init() override;
+	///** virtual function to allow custom GameInstances an opportunity to set up what it needs */
+	//virtual void Init() override;
 
 	/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
-	virtual void Shutdown() override;
+	//virtual void Shutdown() override;
 
-	UFUNCTION()
-	void LuaStateInitCallback();
+	//UFUNCTION()
+	//void LuaStateInitCallback();
 
 	// create global state, freed on app exit
-	NS_SLUA::LuaState state;
+	//NS_SLUA::LuaState state;
 
 	void CreateEnemys();
 
@@ -44,6 +44,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int32 GetEnemyIndex();
+
+	UFUNCTION(BlueprintCallable)
+	FCommonAttribute GetEnemy();
 
 protected:
 /*
