@@ -28,16 +28,14 @@ struct FPassiveSkill : public FTableRowBase {
 
 	int32 GetValue() const;
 
-	FString GetContent() const;
-
+	UPROPERTY(BlueprintReadWrite)
 	EPassiveSkill type;
 
+	UPROPERTY(BlueprintReadWrite)
 	FString name;
 
+	UPROPERTY(BlueprintReadWrite)
 	int32 value;
-
-	FString content;
-
 };
 
 // ÆFÃ~
@@ -50,8 +48,24 @@ public:
 
 	void DecideContent();
 
+	void DecidePassiveSkill();
+
 	UFUNCTION(BlueprintCallable)
-	FString GetName();
+	FString GetName() const;
+
+	UFUNCTION(BlueprintCallable)
+	FPassiveSkill GetPassiveSkill() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetFinallyHealth() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetFinallyAttack() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetFinallyDefense() const;
+
+	int32 WhichPassiveSkill(int32 index) const;
 
 private:
 	FCommonAttribute attribute;
