@@ -26,11 +26,7 @@ Version 4.24.3
 
 * * *
 ## 插件
-
-### slua-unreal  
-
-[Tencent/sluaunreal](https://github.com/Tencent/sluaunreal)    
-
+  
 ### AsyncLoadingScreen  
 
 [AsyncLoadingScreen](https://github.com/truong-bui/AsyncLoadingScreen)  
