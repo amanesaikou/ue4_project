@@ -22,6 +22,7 @@ int32 FPassiveSkill::GetValue() const {
 USpiritBeast::USpiritBeast() {
 	DecideContent();
 	DecidePassiveSkill();
+	DecideClass();
 }
 
 void USpiritBeast::DecideContent() {
@@ -42,8 +43,54 @@ void USpiritBeast::DecidePassiveSkill() {
 	passiveSkill = *temp;
 }
 
+void USpiritBeast::DecideClass() {
+	DecideStar();
+	DecideGrade();
+	blood = 1;
+}
+
+void USpiritBeast::DecideStar() {
+	// 40 30 18 9 3
+	int32 random = FMath::RandRange(1, 100);
+	if (random < 41)
+		star = 1;
+	else if (random < 71)
+		star = 2;
+	else if (random < 89)
+		star = 3;
+	else if (random < 98)
+		star = 4;
+	else
+		star = 5;
+}
+
+void USpiritBeast::DecideGrade() {
+	// 50 35 12 3 
+	int32 random = FMath::RandRange(1, 100);
+	if (random < 51)
+		grade = 1;
+	else if (random < 86)
+		grade = 2;
+	else if (random < 98)
+		grade = 3;
+	else
+		grade = 4;
+}
+
 FString USpiritBeast::GetName() const {
 	return attribute.GetName();
+}
+
+int32 USpiritBeast::GetStar() const {
+	return star;
+}
+
+int32 USpiritBeast::GetBlood() const {
+	return blood;
+}
+
+int32 USpiritBeast::GetGrade() const {
+	return grade;
 }
 
 FPassiveSkill USpiritBeast::GetPassiveSkill() const {
@@ -51,15 +98,19 @@ FPassiveSkill USpiritBeast::GetPassiveSkill() const {
 }
 
 int32 USpiritBeast::GetFinallyHealth() const {
-	return attribute.GetHealth() + WhichPassiveSkill(1);
+	return attribute.GetHealth() * GetBuff() + WhichPassiveSkill(1);
 }
 
 int32 USpiritBeast::GetFinallyAttack() const {
-	return attribute.GetAttack() + WhichPassiveSkill(2);
+	return attribute.GetAttack() * GetBuff() + WhichPassiveSkill(2);
 }
 
 int32 USpiritBeast::GetFinallyDefense() const {
-	return attribute.GetDefense() + WhichPassiveSkill(3);
+	return attribute.GetDefense() * GetBuff() + WhichPassiveSkill(3);
+}
+
+float USpiritBeast::GetBuff() const {
+	return 1.0 + float(star) * 0.2 + float(blood) * 0.25 + float(grade) * 0.3;
 }
 
 int32 USpiritBeast::WhichPassiveSkill(int32 index) const {

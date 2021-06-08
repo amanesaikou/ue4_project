@@ -50,8 +50,26 @@ public:
 
 	void DecidePassiveSkill();
 
+	// 設定階級
+	void DecideClass();
+
+	// 決定星級
+	void DecideStar();
+
+	// 決定品級
+	void DecideGrade();
+
 	UFUNCTION(BlueprintCallable)
 	FString GetName() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetStar() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetBlood() const;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetGrade() const;
 
 	UFUNCTION(BlueprintCallable)
 	FPassiveSkill GetPassiveSkill() const;
@@ -65,16 +83,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetFinallyDefense() const;
 
+	float GetBuff() const;
+
+	// 獲取天賦加成
 	int32 WhichPassiveSkill(int32 index) const;
 
 private:
+	// 屬性
 	FCommonAttribute attribute;
 
+	// 天賦
 	FPassiveSkill passiveSkill;
 
+	// 星級
 	int32 star;
 
+	// 血脈濃度
 	int32 blood;
 
+	// 品級
 	int32 grade;
 };
