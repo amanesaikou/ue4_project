@@ -39,3 +39,6 @@ constexpr const char* gSpiritBeast = "DataTable'/Game/StarterContent/Datatable/S
 
 // 靈獸天賦表
 constexpr const char* gPassiveSkill = "DataTable'/Game/StarterContent/Datatable/SpiritBeast/PassiveSkill.PassiveSkill'";
+
+// 設施路徑表
+constexpr const char*  gFacility = "DataTable'/Game/StarterContent/Datatable/Facility/Facility.Facility'";

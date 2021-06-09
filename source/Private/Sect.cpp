@@ -2,10 +2,22 @@
 
 
 #include "Sect.h"
-#include <thread> // std::thread
+#include "Constant.h"
 
 USect::USect() {
+	SetFacility();
 	spiritStone = 100000;
+	medicinalMaterials = 10000;
+}
+
+void USect::SetFacility() {
+	const char* path = gFacility;
+	UDataTable* pDataTable = LoadObject<UDataTable>(NULL, UTF8_TO_TCHAR(path));
+	TArray<FName> rowNames = pDataTable->GetRowNames();
+	for (int32 i = 0; i < rowNames.Num();i++) {
+		FFacility* temp = pDataTable->FindRow<FFacility>(rowNames[i], "");
+		facilities.Emplace(*temp);
+	}
 }
 
 void USect::AddEliteDisciple() {
@@ -147,6 +159,10 @@ bool USect::CanAddLaw(UCultivationLaw* law) {
 
 	else
 		return GetReturn(attackSkills);
+}
+
+TArray<FFacility> USect::GetFacilities() {
+	return facilities;
 }
 
 TArray<UEliteDisciple*> USect::GetEliteDisciples() {

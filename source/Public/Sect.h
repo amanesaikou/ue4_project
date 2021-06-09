@@ -6,12 +6,14 @@
 #include "UObject/NoExportTypes.h"
 #include "Disciple.h"
 #include "SpiritBeast.h"
+#include "Facility.h"
 #include <functional> // std::functional
 #include "Sect.generated.h"
 
 /**
  * 
  */
+
 
 // 門派
 UCLASS(BlueprintType)
@@ -22,6 +24,8 @@ public:
 
 	// 建構子
 	USect();
+
+	void SetFacility();
 
 	UFUNCTION(BlueprintCallable)
 	// 加入新的弟子
@@ -70,6 +74,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	// 可以加入功法嗎
 	bool CanAddLaw(UCultivationLaw* law);
+
+	UFUNCTION(BlueprintCallable)
+	// 獲取所有設施
+	TArray<FFacility> GetFacilities();
 
 	UFUNCTION(BlueprintCallable)
 	// 獲取所有弟子
@@ -185,6 +193,10 @@ protected:
 	int32 spiritStone;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 藥材
+	int32 medicinalMaterials;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	// 武器
 	TArray<UEquipment*> weapons;
 
@@ -211,6 +223,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	// 靈獸
 	TArray<USpiritBeast*> spiritBeasts;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// 設施
+	TArray<FFacility> facilities;
 
 };
 
