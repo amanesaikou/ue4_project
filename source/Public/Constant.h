@@ -42,3 +42,12 @@ constexpr const char* gPassiveSkill = "DataTable'/Game/StarterContent/Datatable/
 
 // 設施路徑表
 constexpr const char*  gFacility = "DataTable'/Game/StarterContent/Datatable/Facility/Facility.Facility'";
+
+// 靈石、藥材最大數量
+constexpr int32 gLimit = 2000000000;
+
+// 血脈升級所需值
+constexpr int32 gBloodLine[] = { 200, 1000, 5000 };
+
+// 弟子上限
+constexpr int32 gDiscipleLimit = 60;

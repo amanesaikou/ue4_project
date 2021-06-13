@@ -73,6 +73,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetPrice() const;
 
+	UFUNCTION(BlueprintCallable)
+	FString GetRarityName() const;
+
+	UFUNCTION(BlueprintCallable)
+	FString GetName() const;
+
 protected:
 	// ª««~ÄÝ©Ê
 	UPROPERTY(BlueprintReadWrite)
@@ -84,12 +90,6 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	uint8 GetRarity() const;
-
-	UFUNCTION(BlueprintCallable)
-	FString GetName() const;
-
-	UFUNCTION(BlueprintCallable)
-	FString GetRarityName() const;
 };
 
 UCLASS(BlueprintType)

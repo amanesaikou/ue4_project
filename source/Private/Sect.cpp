@@ -1,13 +1,26 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Sect.h"
+#include "ComputeBPLibrary.h"
 #include "Constant.h"
 
 USect::USect() {
 	SetFacility();
-	spiritStone = 100000;
-	medicinalMaterials = 10000;
+	spiritStone = 2000000000;
+	medicinalMaterials = 10000000;
+	bloodlinePill = 1000;
+	for (int32 i = 0; i < 5; i++)
+		AddEliteDisciple();
+	for (int32 i = 0; i < 5; i++)
+		AddEquipment();
+	for (int32 i = 0; i < 5; i++)
+		AddLaw();
+}
+
+void USect::EveryYear() {
+	AddSpiritStone(facilities[0].GetValue());
+	AddMedicinalMaterials(facilities[1].GetValue());
 }
 
 void USect::SetFacility() {
@@ -25,6 +38,8 @@ void USect::AddEliteDisciple() {
 	objectName.AppendInt(eliteDiscipleNums++); 
 	UEliteDisciple* temp = NewObject<UEliteDisciple>(this, FName(*objectName));
 	eliteDisciples.Emplace(temp);
+	FString str = Message::GetEmployDisciple(temp->GetRarityName(), temp->GetName());
+	logs.Add(str);
 }
 
 void USect::EmployEliteDisciple() {
@@ -33,7 +48,7 @@ void USect::EmployEliteDisciple() {
 }
 
 bool USect::CanEmployDisciple() {
-	return spiritStone > 100 && eliteDisciples.Num() < 55 ? true : false;
+	return spiritStone > 100 && eliteDisciples.Num() < gDiscipleLimit ? true : false;
 }
 
 void USect::ExpelDisciple(int32 index) {
@@ -84,10 +99,15 @@ void USect::AddEquipment() {
 	FString objectName = "UEquipment";
 	objectName.AppendInt(equipmentNums++);
 	UEquipment* temp = NewObject<UEquipment>(this, FName(*objectName));
-	if (CanAddEquipment(temp) == true)
+	if (CanAddEquipment(temp) == true) {
 		AddRemoveEquipment(temp);
+		FString str = Message::GetNewEquipment(temp->GetRarityName(), temp->GetName(), uint8(temp->GetType()));
+		logs.Add(str);
+	}
 	else {
 		AddSpiritStone(temp->GetPrice());
+		FString str = Message::GetNewEquipment(temp->GetRarityName(), temp->GetName(), uint8(temp->GetType()), temp->GetPrice());
+		logs.Add(str);
 		temp = NULL;
 	}
 }
@@ -120,10 +140,15 @@ void USect::AddLaw() {
 	FString objectName = "UCultivationLaw";
 	objectName.AppendInt(lawNums++);
 	UCultivationLaw* temp = NewObject<UCultivationLaw>(this, FName(*objectName));
-	if (CanAddLaw(temp) == true)
+	if (CanAddLaw(temp) == true) {
 		AddRemoveLaw(temp);
+		FString str = Message::GetNewLaw(temp->GetRarityName(), temp->GetName(), uint8(temp->GetType()));
+		logs.Add(str);
+	}
 	else {
 		AddSpiritStone(temp->GetPrice());
+		FString str = Message::GetNewLaw(temp->GetRarityName(), temp->GetName(), uint8(temp->GetType()), temp->GetPrice());
+		logs.Add(str);
 		temp = NULL;
 	}
 }
@@ -163,6 +188,10 @@ bool USect::CanAddLaw(UCultivationLaw* law) {
 
 TArray<FFacility> USect::GetFacilities() {
 	return facilities;
+}
+
+FFacility USect::GetFacility(int32 index) {
+	return facilities[index];
 }
 
 TArray<UEliteDisciple*> USect::GetEliteDisciples() {
@@ -238,8 +267,37 @@ void USect::RemoveAttackSkill(int32 index) {
 	attackSkills.RemoveAt(index);
 }
 
+void USect::SellSpiritBeast(int32 index) {
+	AddSpiritStone(spiritBeasts[index]->GetPrice());
+	spiritBeasts.RemoveAt(index);
+}
+
+bool USect::CanFacilityLevelUp(int index, int32 cost) {
+	if (facilities[index].CanLevelUp() && spiritStone >= cost)
+		return true;
+	else
+		return false;
+}
+
+void USect::FacilityLevelUp(int32 index, int32 cost, int32 value) {
+	facilities[index].LevelUp();
+	facilities[index].SetValue(value);
+	FFacility temp = facilities[index];
+	UseSpiritStone(cost);
+	FString str = Message::GetFacilityLevelUp(temp.GetName(), temp.GetLevel(), cost);
+	logs.Add(str);
+}
+
 void USect::UseSpiritStone(int32 cost) {
 	spiritStone -= cost;
+}
+
+void USect::UseMedicinalMaterials(int32 cost) {
+	medicinalMaterials -= cost;
+}
+
+void USect::UseBloodlinePills(int32 cost) {
+	bloodlinePill -= cost;
 }
 
 void USect::AddAttribute(int32& attribute, std::function<int32(UEliteDisciple*)> Get){
@@ -268,9 +326,9 @@ int32 USect::GetFinallyDefense() {
 void USect::DiscipleSort() {
 	eliteDisciples.Sort([](const UEliteDisciple& A, const UEliteDisciple& B) {
 		/*
-			§Ì¤l±Æ§Ç¥ı¤ñ¸ê½è
-			¬Û¦P¦A¤ñ©R®c¼Æ¶q
-			¬Û¦P¦A¤ñ¬P¨°¼Æ¶q
+			å¼Ÿå­æ’åºå…ˆæ¯”è³‡è³ª
+			ç›¸åŒå†æ¯”å‘½å®®æ•¸é‡
+			ç›¸åŒå†æ¯”æ˜Ÿè¾°æ•¸é‡
 		*/
 		if (A.rarity == B.rarity) {
 			if (A.GetLifePalace() == B.GetLifePalace())
@@ -284,7 +342,7 @@ void USect::DiscipleSort() {
 
 void USect::CultivationLawSort(int32 index) {
 	auto Sort = [](TArray<UCultivationLaw*>& laws) {
-		// ¥\ªk±Æ§Ç¤ñid
+		// åŠŸæ³•æ’åºæ¯”id
 		laws.Sort([](const UCultivationLaw& A, const UCultivationLaw& B) {
 			return A.GetID() < B.GetID();
 		});
@@ -305,9 +363,9 @@ void USect::CultivationLawSort(int32 index) {
 void USect::EquipmentSort(int32 index) {
 	auto Sort = [](TArray<UEquipment*>& equipments) {
 		/*
-			¸Ë³Æ±Æ§Ç¥ı¤ñid
-			¬Û¦P¦A¤ñ±j¤Æµ¥¯Å
-			¬Û¦P¦A¤ñºë·Òµ¥¯Å
+			è£å‚™æ’åºå…ˆæ¯”id
+			ç›¸åŒå†æ¯”å¼·åŒ–ç­‰ç´š
+			ç›¸åŒå†æ¯”ç²¾ç…‰ç­‰ç´š
 		*/
 		equipments.Sort([](const UEquipment& A, const UEquipment& B) {
 			if (A.GetID() == B.GetID()) {
@@ -334,9 +392,34 @@ void USect::EquipmentSort(int32 index) {
 }
 
 void USect::AddSpiritStone(int32 num) {
-	spiritStone += num;
+	spiritStone = UComputeBPLibrary::CheckOverRange(spiritStone+num, gLimit);
 }
 
 int32 USect::GetSpiritStone() const {
 	return spiritStone;
+}
+
+void USect::AddMedicinalMaterials(int32 num) {
+	medicinalMaterials = UComputeBPLibrary::CheckOverRange(medicinalMaterials + num, gLimit);
+}
+
+int32 USect::GetMedicinalMaterials() const {
+	return medicinalMaterials;
+}
+
+void USect::MakeBloodlinePills(int32 num) {
+	medicinalMaterials -= num * facilities[2].GetValue();
+	bloodlinePill += num;
+}
+
+int32 USect::GetBloodlinePills() const {
+	return bloodlinePill;
+}
+
+TArray<FString> USect::GetLogs() const {
+	return logs;
+}
+
+void USect::ClearLogs() {
+	logs.Empty();
 }

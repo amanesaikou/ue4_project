@@ -19,6 +19,18 @@ struct FFacility : public FTableRowBase {
 	// «Øºc¤l
 	FFacility();
 
+	void LevelUp();
+
+	bool CanLevelUp();
+
+	void SetValue(int32 newValue);
+
+	FString GetName() const;
+
+	int32 GetValue() const;
+
+	int32 GetLevel() const;
+
 	UPROPERTY(BlueprintReadWrite)
 	FString name;
 

@@ -23,6 +23,8 @@ USpiritBeast::USpiritBeast() {
 	DecideContent();
 	DecidePassiveSkill();
 	DecideClass();
+	price = FMath::RandRange(10000, 30000);
+	bloodLineValue = 0;
 }
 
 void USpiritBeast::DecideContent() {
@@ -132,4 +134,31 @@ int32 USpiritBeast::WhichPassiveSkill(int32 index) const {
 			return 0;
 			break;
 	}
+}
+
+int32 USpiritBeast::GetPrice() const {
+	return price;
+}
+
+int32 USpiritBeast::UsePill(int32 value) {
+	int32 i = 1;
+	for (i; i < value; i++) {
+		bloodLineValue += FMath::RandRange(5, 10);
+		if (bloodLineValue >= gBloodLine[blood-1]) {
+			bloodLineValue -= gBloodLine[blood-1];
+			blood += 1;
+		}
+		if (blood == 4) {
+			return i;
+		}
+	}
+	return i;
+}
+
+int32 USpiritBeast::GetBloodLineValue() const {
+	return bloodLineValue;
+}
+
+int32 USpiritBeast::GetNextBloodValue() const {
+	return gBloodLine[blood-1];
 }

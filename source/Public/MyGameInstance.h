@@ -19,18 +19,6 @@ class DEVELOP_API UMyGameInstance : public UGameInstance {
 public:
 	UMyGameInstance();
 
-	///** virtual function to allow custom GameInstances an opportunity to set up what it needs */
-	//virtual void Init() override;
-
-	/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
-	//virtual void Shutdown() override;
-
-	//UFUNCTION()
-	//void LuaStateInitCallback();
-
-	// create global state, freed on app exit
-	//NS_SLUA::LuaState state;
-
 	void CreateEnemys();
 
 	UFUNCTION(BlueprintCallable)
@@ -48,18 +36,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FCommonAttribute GetEnemy();
 
+	UFUNCTION(BlueprintCallable)
+	void AfterAYear();
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetYears() const;
+
 protected:
-/*
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<TSubclassOf<UDisciple>> disciples;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UCultivationLaw* cultivationLaw;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<UCultivationLaw*> cultivationLaws;
-
-*/
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USect* sect;
 
@@ -67,5 +50,7 @@ protected:
 	TArray<FCommonAttribute> enemys;
 
 	int32 enemyIndex = 0;
+
+	int32 years = 1;
 };
 	

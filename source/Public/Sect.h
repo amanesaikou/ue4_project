@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,219 +15,276 @@
  */
 
 
-// ªù¬£
+// é–€æ´¾
 UCLASS(BlueprintType)
 class DEVELOP_API USect : public UObject {
 	GENERATED_BODY()
 
 public:
 
-	// «Øºc¤l
+	// å»ºæ§‹å­
 	USect();
+
+	UFUNCTION(BlueprintCallable)
+	void EveryYear();
 
 	void SetFacility();
 
 	UFUNCTION(BlueprintCallable)
-	// ¥[¤J·sªº§Ì¤l
+	// åŠ å…¥æ–°çš„å¼Ÿå­
 	void AddEliteDisciple();
 
 	UFUNCTION(BlueprintCallable)
-	// ©Û¶Ò§Ì¤l
+	// æ‹›å‹Ÿå¼Ÿå­
 	void EmployEliteDisciple();
 
 	UFUNCTION(BlueprintCallable)
-	// ¥i¥H©Û¶Ò¶Ü
+	// å¯ä»¥æ‹›å‹Ÿå—
 	bool CanEmployDisciple();
 
 	UFUNCTION(BlueprintCallable)
-	// ÅX³v§Ì¤l
+	// é©…é€å¼Ÿå­
 	void ExpelDisciple(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ¥i¥HÅX³v§Ì¤l¶Ü ÅX³v§Ì¤l«áª««~·|¥[¦^¨Ó ¶·ÀË¬d¬O§_¶W¹Lª««~¼Æ¶q¤W­­ 
+	// å¯ä»¥é©…é€å¼Ÿå­å— é©…é€å¼Ÿå­å¾Œç‰©å“æœƒåŠ å›ä¾† é ˆæª¢æŸ¥æ˜¯å¦è¶…éç‰©å“æ•¸é‡ä¸Šé™ 
 	bool CanExpelDisciple(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ¥[¤J·sªº¸Ë³Æ
+	// åŠ å…¥æ–°çš„è£å‚™
 	void AddEquipment();
 
 	UFUNCTION(BlueprintCallable)
-	// ¥[¦^§Ì¤l²æ¤Uªº¸Ë³Æ©Î¥[¤J·sªº¸Ë³Æ
+	// åŠ å›å¼Ÿå­è„«ä¸‹çš„è£å‚™æˆ–åŠ å…¥æ–°çš„è£å‚™
 	void AddRemoveEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
-	// ¥i¥H¥[¤J¸Ë³Æ¶Ü
+	// å¯ä»¥åŠ å…¥è£å‚™å—
 	bool CanAddEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
-	// ¥[¤J·sªº¥\ªk
+	// åŠ å…¥æ–°çš„åŠŸæ³•
 	void AddLaw();
 
 	UFUNCTION(BlueprintCallable)
-	//¥[¤J·sªºÆFÃ~
+	//åŠ å…¥æ–°çš„éˆç¸
 	void AddSpiritBeast();
 
 	UFUNCTION(BlueprintCallable)
-	// ¥[¦^§Ì¤l©ñ±ó­×½mªº¥\ªk©Î¥[¤J·sªº¥\ªk
+	// åŠ å›å¼Ÿå­æ”¾æ£„ä¿®ç·´çš„åŠŸæ³•æˆ–åŠ å…¥æ–°çš„åŠŸæ³•
 	void AddRemoveLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
-	// ¥i¥H¥[¤J¥\ªk¶Ü
+	// å¯ä»¥åŠ å…¥åŠŸæ³•å—
 	bool CanAddLaw(UCultivationLaw* law);
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³³]¬I
+	// ç²å–æ‰€æœ‰è¨­æ–½
 	TArray<FFacility> GetFacilities();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³§Ì¤l
+	// ç²å–è¨­æ–½
+	FFacility GetFacility(int32 index);
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–æ‰€æœ‰å¼Ÿå­
 	TArray<UEliteDisciple*> GetEliteDisciples();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³ªZ¾¹
+	// ç²å–æ‰€æœ‰æ­¦å™¨
 	TArray<UEquipment*> GetWeapons();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³ªkÄ_
+	// ç²å–æ‰€æœ‰æ³•å¯¶
 	TArray<UEquipment*> GetArtifacts();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³·t¾¹
+	// ç²å–æ‰€æœ‰æš—å™¨
 	TArray<UEquipment*> GetHiddenWeapons();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³­×½mªk
+	// ç²å–æ‰€æœ‰ä¿®ç·´æ³•
 	TArray<UCultivationLaw*> GetCultivationLaws();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³½vÅéªk
+	// ç²å–æ‰€æœ‰ç·é«”æ³•
 	TArray<UCultivationLaw*> GetWorkoutLaws();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³ªZ§Ş
+	// ç²å–æ‰€æœ‰æ­¦æŠ€
 	TArray<UCultivationLaw*> GetAttackSkills();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©Ò¦³ÆFÃ~
+	// ç²å–æ‰€æœ‰éˆç¸
 	TArray<USpiritBeast*> GetSpiritBeasts();
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£¸Ë³Æ
+	// ç§»é™¤è£å‚™
 	void RemoveEquipment(UEquipment* equipment, int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£ªZ¾¹
+	// ç§»é™¤æ­¦å™¨
 	void RemoveWeapon(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£ªkÄ_
+	// ç§»é™¤æ³•å¯¶
 	void RemoveArtifact(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£·t¾¹
+	// ç§»é™¤æš—å™¨
 	void RemoveHiddenWeapon(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£­×½mªk
+	// ç§»é™¤ä¿®ç·´æ³•
 	void RemoveCultivationLaw(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£ÁëÅéªk
+	// ç§»é™¤é›é«”æ³•
 	void RemoveWorkoutLaw(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ²¾°£ªZ§Ş
+	// ç§»é™¤æ­¦æŠ€
 	void RemoveAttackSkill(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ¨Ï¥ÎÆF¥Û
+	// å‡ºå”®éˆç¸
+	void SellSpiritBeast(int32 index);
+
+	UFUNCTION(BlueprintCallable)
+	// è¨­æ–½å¯ä»¥å‡ç´šå—
+	bool CanFacilityLevelUp(int index, int32 cost);
+
+	UFUNCTION(BlueprintCallable)
+	// è¨­æ–½å‡ç´š
+	void FacilityLevelUp(int32 index, int32 cost, int32 value);
+
+	UFUNCTION(BlueprintCallable)
+	// ä½¿ç”¨éˆçŸ³
 	void UseSpiritStone(int32 cost);
 
+	UFUNCTION(BlueprintCallable)
+	// ä½¿ç”¨è—¥æ
+	void UseMedicinalMaterials(int32 cost);
+
+	UFUNCTION(BlueprintCallable)
+	// ä½¿ç”¨è¡€è„ˆä¸¹
+	void UseBloodlinePills(int32 cost);
+
+	// è¨ˆç®—å±¬æ€§
 	void AddAttribute(int32& attribute, std::function<int32(UEliteDisciple*)> Get);
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×§ğÀ»
+	// ç²å–æœ€çµ‚æ”»æ“Š
 	int32 GetFinallyAttack();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¥Í©R
+	// ç²å–æœ€çµ‚ç”Ÿå‘½
 	int32 GetFinallyHealth();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¨¾¿m
+	// ç²å–æœ€çµ‚é˜²ç¦¦
 	int32 GetFinallyDefense();
 
 	UFUNCTION(BlueprintCallable)
-	// §Ì¤l±Æ§Ç
+	// å¼Ÿå­æ’åº
 	void DiscipleSort();
 
 	UFUNCTION(BlueprintCallable)
-	// ¥\ªk±Æ§Ç
+	// åŠŸæ³•æ’åº
 	void CultivationLawSort(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ¸Ë³Æ±Æ§Ç
+	// è£å‚™æ’åº
 	void EquipmentSort(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// ¼W¥[ÆF¥Û
+	// å¢åŠ éˆçŸ³
 	void AddSpiritStone(int32 num);
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨úÆF¥Û
+	// ç²å–éˆçŸ³
 	int32 GetSpiritStone() const;
+
+	UFUNCTION(BlueprintCallable)
+	// å¢åŠ è—¥æ
+	void AddMedicinalMaterials(int32 num);
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–è—¥æ
+	int32 GetMedicinalMaterials() const;
+
+	UFUNCTION(BlueprintCallable)
+	// è£½ä½œè¡€è„ˆä¸¹
+	void MakeBloodlinePills(int32 num);
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–è¡€è„ˆä¸¹
+	int32 GetBloodlinePills() const;
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–log
+	TArray<FString> GetLogs() const;
+
+	UFUNCTION(BlueprintCallable)
+	// æ¸…é™¤log
+	void ClearLogs();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// §Ì¤l
+	// å¼Ÿå­
 	TArray<UEliteDisciple*> eliteDisciples;
 
-	// uobject«Ø¥ß¦WºÙ¼Æ¦r
+	// uobjectå»ºç«‹åç¨±æ•¸å­—
 	int32 eliteDiscipleNums = 0;
 	int32 equipmentNums = 0;
 	int32 lawNums = 0;
 	int32 spiritBeastNums = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ÆF¥Û
+	// éˆçŸ³
 	int32 spiritStone;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ÃÄ§÷
+	// è—¥æ
 	int32 medicinalMaterials;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ªZ¾¹
+	// è¡€è„ˆä¸¹
+	int32 bloodlinePill;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	// æ­¦å™¨
 	TArray<UEquipment*> weapons;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ªkÄ_
+	// æ³•å¯¶
 	TArray<UEquipment*> artifacts;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ·t¾¹
+	// æš—å™¨
 	TArray<UEquipment*> hiddenWeapons;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ­×½mªk
+	// ä¿®ç·´æ³•
 	TArray<UCultivationLaw*> cultivationLaws;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ÁëÅéªk
+	// é›é«”æ³•
 	TArray<UCultivationLaw*> workoutLaws;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ªZ§Ş
+	// æ­¦æŠ€
 	TArray<UCultivationLaw*> attackSkills;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ÆFÃ~
+	// éˆç¸
 	TArray<USpiritBeast*> spiritBeasts;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// ³]¬I
+	// è¨­æ–½
 	TArray<FFacility> facilities;
+
+	TArray<FString> logs;
 
 };
 
-//void AddAttribute(int32& attribute, int32 start, int32 end, TArray<UEliteDisciple*>& disciples, std::function<int32(UEliteDisciple*)> Get);
