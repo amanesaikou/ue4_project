@@ -7,6 +7,7 @@
 #include "Disciple.h"
 #include "SpiritBeast.h"
 #include "Facility.h"
+#include "Firm.h"
 #include <functional> // std::functional
 #include "Sect.generated.h"
 
@@ -57,6 +58,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	// 加回弟子脫下的裝備或加入新的裝備
 	void AddRemoveEquipment(UEquipment* equipment);
+
+	UFUNCTION(BlueprintCallable)
+	// 購買商行出售的裝備
+	void BuyEquipment(UEquipment* equipment, int32 index);
 
 	UFUNCTION(BlueprintCallable)
 	// 可以加入裝備嗎
@@ -119,6 +124,10 @@ public:
 	TArray<USpiritBeast*> GetSpiritBeasts();
 
 	UFUNCTION(BlueprintCallable)
+	// 賣掉裝備
+	void SellEquipment(UEquipment* equipment, int32 index);
+
+	UFUNCTION(BlueprintCallable)
 	// 移除裝備
 	void RemoveEquipment(UEquipment* equipment, int32 index);
 
@@ -135,7 +144,15 @@ public:
 	void RemoveHiddenWeapon(int32 index);
 
 	UFUNCTION(BlueprintCallable)
-	// 移除修練法
+	// 賣掉功法
+	void SellLaw(UCultivationLaw* law, int32 index);
+
+	UFUNCTION(BlueprintCallable)
+	// 移除功法
+	void RemoveLaw(UCultivationLaw* law, int32 index);
+
+	UFUNCTION(BlueprintCallable)
+	// 移除修煉法
 	void RemoveCultivationLaw(int32 index);
 
 	UFUNCTION(BlueprintCallable)
@@ -221,6 +238,13 @@ public:
 	// 獲取血脈丹
 	int32 GetBloodlinePills() const;
 
+	// 初始化商行
+	void CreateStore();
+
+	UFUNCTION(BlueprintCallable)
+	// 獲取商行
+	UFirm* GetStrore() const;
+
 	UFUNCTION(BlueprintCallable)
 	// 獲取log
 	TArray<FString> GetLogs() const;
@@ -265,7 +289,7 @@ protected:
 	TArray<UEquipment*> hiddenWeapons;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 修練法
+	// 修煉法
 	TArray<UCultivationLaw*> cultivationLaws;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -283,6 +307,10 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	// 設施
 	TArray<FFacility> facilities;
+
+	// 商行
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UFirm* store;
 
 	TArray<FString> logs;
 

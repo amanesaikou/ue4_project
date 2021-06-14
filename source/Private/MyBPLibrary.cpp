@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MyBPLibrary.h"
@@ -53,36 +53,12 @@ uint8 UTypeBPLibrary::GetRarityIndex(TArray<int32>& probabilities) {
 }
 
 FLinearColor UTypeBPLibrary::GetDiscipleColor(EDiscipleRarityType rarity) {
-	// ∂¿ ¨ı µµ ¬≈ ∫Ò ∂¬
+	// ÈªÉ Á¥Ö Á¥´ Ëóç Á∂† Èªë
 	TArray<uint8> R = { 255, 255, 153, 0, 0, 0 };
 	TArray<uint8> G = { 255, 0, 0, 0, 255, 0 };
 	TArray<uint8> B = { 0, 0, 255, 235, 0, 0 };
 	int32 index = int32(uint8(rarity));
 	return FLinearColor(FColor(R[index], G[index], B[index]));
-}
-
-bool UTypeBPLibrary::IsSonofEra(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::SonofEra ? true : false;
-}
-
-bool UTypeBPLibrary::IsGenius(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::Genius ? true : false;
-}
-
-bool UTypeBPLibrary::IsExtraordinary(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::Extraordinary ? true : false;
-}
-
-bool UTypeBPLibrary::IsOutstanding(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::Outstanding ? true : false;
-}
-
-bool UTypeBPLibrary::IsExcellent(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::Excellent ? true : false;
-}
-
-bool UTypeBPLibrary::IsNormal(EDiscipleRarityType rarity) {
-	return rarity == EDiscipleRarityType::Normal ? true : false;
 }
 
 template<class T>

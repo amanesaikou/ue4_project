@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -12,14 +12,14 @@
  * 
  */
 
-// ¦@³qÄİ©Ê
-// µ×­^§Ì¤l ¸Ë³Æ ¯¦ÓDµ¥Ãş§O¨Ï¥Î
+// å…±é€šå±¬æ€§
+// èè‹±å¼Ÿå­ è£å‚™ ç¥•ç¬ˆç­‰é¡åˆ¥ä½¿ç”¨
 USTRUCT(BlueprintType)
 struct FCommonAttribute : public FTableRowBase {
 
 	GENERATED_BODY()
 
-	// «Øºc¤l
+	// å»ºæ§‹å­
 	FCommonAttribute();
 
 	int32 GetID() const;
@@ -38,25 +38,25 @@ struct FCommonAttribute : public FTableRowBase {
 	UPROPERTY(BlueprintReadWrite)
 	int32 id;
 	
-	// ¦WºÙ
+	// åç¨±
 	UPROPERTY(BlueprintReadWrite)
 	FString name;
 
-	// §ğÀ»¤O
+	// æ”»æ“ŠåŠ›
 	UPROPERTY(BlueprintReadWrite)
 	int32 attack;
 
-	// ¦å¶q
+	// è¡€é‡
 	UPROPERTY(BlueprintReadWrite)
 	int32 health;
 
-	// ¨¾¿m
+	// é˜²ç¦¦
 	UPROPERTY(BlueprintReadWrite)
 	int32 defense;
 
 };
 
-// ª««~°òÃş
+// ç‰©å“åŸºé¡
 UCLASS()
 class DEVELOP_API UItem : public UObject {
 
@@ -67,7 +67,7 @@ public:
 
 	int32 GetID() const;
 
-	// ª««~µ}¦³«×
+	// ç‰©å“ç¨€æœ‰åº¦
 	EItemRarityType rarity;
 
 	UFUNCTION(BlueprintCallable)
@@ -80,7 +80,7 @@ public:
 	FString GetName() const;
 
 protected:
-	// ª««~Äİ©Ê
+	// ç‰©å“å±¬æ€§
 	UPROPERTY(BlueprintReadWrite)
 	FCommonAttribute attribute;
 
@@ -100,72 +100,74 @@ class DEVELOP_API UEquipment : public UItem {
 public:
 	UEquipment();
 
-	// ½T©w¬O­şºØ¸Ë³Æ
+	// ç¢ºå®šæ˜¯å“ªç¨®è£å‚™
 	void DecideType();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¸Ë³Æ«¬ºA
+	// ç²å–è£å‚™å‹æ…‹
 	EEquipmentType GetType() const;
 
-	// ®Ú¾Ú¸Ë³Æµ}¦³«×»PºØÃşÅªªí
+	// æ ¹æ“šè£å‚™ç¨€æœ‰åº¦èˆ‡ç¨®é¡è®€è¡¨
 	void DecideContent();
 
 	UFUNCTION(BlueprintCallable)
-	// ¸Ë³Æ±j¤Æ
-	bool Enhance(const int32& spiritStone);
-
-	// ¥i¥H±j¤Æ¶Ü
-	bool CanEnhance(const int32& spiritStone, int32 cost);
+	// è£å‚™å¼·åŒ–
+	void Enhance();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú±j¤Æ¶O¥Î
+	// å¯ä»¥å¼·åŒ–å—
+	bool CanEnhance(int32 spiritStone);
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–å¼·åŒ–è²»ç”¨
 	int32 GetEnhancementCost() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¸Ë³Æºë·Ò
-	bool Refine(const int32& spiritStone);
-
-	// ¥i¥Hºë·Ò¶Ü
-	bool CanRefine(const int32& spiritStone, int32 cost);
+	// è£å‚™ç²¾ç…‰
+	void Refine();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨úºë·Ò¶O¥Î
+	// å¯ä»¥ç²¾ç…‰å—
+	bool CanRefine(int32 spiritStone);
+
+	UFUNCTION(BlueprintCallable)
+	// ç²å–ç²¾ç…‰è²»ç”¨
 	int32 GetRefiningCost() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú±j¤Æµ¥¯Å
+	// ç²å–å¼·åŒ–ç­‰ç´š
 	int32 GetEnhancementLevel() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨úºë·Òµ¥¯Å
+	// ç²å–ç²¾ç…‰ç­‰ç´š
 	int32 GetRefiningLevel() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×§ğÀ»
+	// ç²å–æœ€çµ‚æ”»æ“Š
 	int32 GetFinallyAttack() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¥Í©R
+	// ç²å–æœ€çµ‚ç”Ÿå‘½
 	int32 GetFinallyHealth() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¨¾¿m
+	// ç²å–æœ€çµ‚é˜²ç¦¦
 	int32 GetFinallyDefense() const;
 	
-	// ±j¤Æµ¥¯Å»Pºë·Òµ¥¯Åªº¥[¦¨¬Û­¼
+	// å¼·åŒ–ç­‰ç´šèˆ‡ç²¾ç…‰ç­‰ç´šçš„åŠ æˆç›¸ä¹˜
 	float GetBuff() const;
 
 private:
 	EEquipmentType equipmentType;
 
-	// ±j¤Æµ¥¯Å
+	// å¼·åŒ–ç­‰ç´š
 	int32 enhancementLevel;
 
-	// ºë·Òµ¥¯Å
+	// ç²¾ç…‰ç­‰ç´š
 	int32 refiningLevel;
 };
 
-// ­×½mªk
+// ä¿®ç·´æ³•
 UCLASS(BlueprintType)
 class DEVELOP_API UCultivationLaw : public UItem {
 
@@ -174,18 +176,19 @@ class DEVELOP_API UCultivationLaw : public UItem {
 public:
 	UCultivationLaw();
 
-	// ½T©w¬O­şºØ¥\ªk
+	// ç¢ºå®šæ˜¯å“ªç¨®åŠŸæ³•
 	void DecideType();
 
-	// ®Ú¾Ú¥\ªkµ}¦³«×»PºØÃşÅªªí¿ï¾Ü¥\ªk
+	// æ ¹æ“šåŠŸæ³•ç¨€æœ‰åº¦èˆ‡ç¨®é¡è®€è¡¨é¸æ“‡åŠŸæ³•
 	void DecideLaw();
 
-	// ­×½m¥\ªk
 	UFUNCTION(BlueprintCallable)
-	bool LevelUp(const int32& spiritStone);
+	// ä¿®ç·´åŠŸæ³•
+	void LevelUp();
 
-	// ¥i¥H­×½m¶Ü?
-	bool CanLevelUp(const int32& spiritStone, int32 cost);
+	UFUNCTION(BlueprintCallable)
+	// å¯ä»¥ä¿®ç·´å—?
+	bool CanLevelUp(int32 spiritStone);
 
 	UFUNCTION(BlueprintCallable)
 	int32 GetLevel() const;
@@ -193,11 +196,11 @@ public:
 	void SetLevelZero();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¥\ªk­×½m¼h¦¸
+	// ç²å–åŠŸæ³•ä¿®ç·´å±¤æ¬¡
 	FString GetLevelName() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¥\ªk­×·ÒÆF¥Ûªá¶O
+	// ç²å–åŠŸæ³•ä¿®ç…‰éˆçŸ³èŠ±è²»
 	int32 GetLevelUpCost() const;
 
 	UFUNCTION(BlueprintCallable)
@@ -213,9 +216,9 @@ public:
 	int32 GetFinallyDefense() const;
 
 private:
-	// ­×½mªkºØÃş
+	// ä¿®ç·´æ³•ç¨®é¡
 	ECultivationType cultivationType;
 
-	// ­×¦æµ¥¯Å
+	// ä¿®è¡Œç­‰ç´š
 	int32 lawLevel;
 };

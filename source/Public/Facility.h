@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,13 +10,13 @@
  * 
  */
 
- // ≥]¨I
+ // Ë®≠ÊñΩ
 USTRUCT(BlueprintType)
 struct FFacility : public FTableRowBase {
 
 	GENERATED_BODY()
 
-	// ´ÿ∫c§l
+	// Âª∫ÊßãÂ≠ê
 	FFacility();
 
 	void LevelUp();

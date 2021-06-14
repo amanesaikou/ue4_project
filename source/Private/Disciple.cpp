@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Disciple.h"
 #include "Engine/World.h"
@@ -43,56 +43,57 @@ int32 UEliteDisciple::GetImageIndex() const {
 	return attriute.GetID();
 }
 
-//FString UEliteDisciple::GetName() const {
-//}
-
 void UEliteDisciple::DecideRarity() {
 	rarity = UTypeBPLibrary::DecideRarity<EDiscipleRarityType>(gDiscipleRarity);
 }
 
 void UEliteDisciple::DecideLifePalace() {
-	if (UTypeBPLibrary::IsSonofEra(rarity)) {
-		int32 random = FMath::RandRange(1, 100);
+	int32 random;
+	// 根據資質決定命宮數量
+	switch (rarity) {
+	case EDiscipleRarityType::SonofEra:
+		random = FMath::RandRange(1, 100);
 		if (random < 96)
 			lifePalace = 12;
 		else
 			lifePalace = 13;
-	}
-
-	else if (UTypeBPLibrary::IsGenius(rarity)) {
-		int32 random = FMath::RandRange(1, 100);
+		break;
+	case EDiscipleRarityType::Genius:
+		random = FMath::RandRange(1, 100);
 		if (random < 81)
 			lifePalace = 10;
 		else
 			lifePalace = 11;
-	}
-
-	else if (UTypeBPLibrary::IsExtraordinary(rarity)) {
-		int32 random = FMath::RandRange(7, 9);
+		break;
+	case EDiscipleRarityType::Extraordinary:
+		random = FMath::RandRange(7, 9);
 		lifePalace = random;
-	}
-
-	else if (UTypeBPLibrary::IsOutstanding(rarity)) {
-		int32 random = FMath::RandRange(5, 6);
+		break;
+	case EDiscipleRarityType::Outstanding:
+		random = FMath::RandRange(5, 6);
 		lifePalace = random;
-	}
-
-	else if (UTypeBPLibrary::IsExcellent(rarity)) {
-		int32 random = FMath::RandRange(2, 4);
+		break;
+	case EDiscipleRarityType::Excellent:
+		random = FMath::RandRange(2, 4);
 		lifePalace = random;
-	}
-
-	else
+		break;
+	case EDiscipleRarityType::Normal:
 		lifePalace = 1;
+		break;
+	default:
+		break;
+	}
 }
 
 void UEliteDisciple::DecideStar() {
-	if (!UTypeBPLibrary::IsNormal(rarity))
+	switch (rarity) {
+	case EDiscipleRarityType::Normal:
 		stars = 9 - uint8(rarity) - FMath::RandRange(0, 1);
-
-	else
+		break;
+	default:
 		stars = FMath::RandRange(1, 3);
-
+		break;
+	}
 }
 
 FString UEliteDisciple::GetName() const {
@@ -194,15 +195,17 @@ float UEliteDisciple::GetBuff() const {
 
 void UEliteDisciple::WearEquipment(const TArray<UEquipment*>& equipments, int32 index) {
 	switch (equipments[index]->GetType()) {
-		case EEquipmentType::Weapon:
-			WearWeapon(equipments, index);
-			break;
-		case EEquipmentType::Artifact :
-			WearArtifact(equipments, index);
-			break;
-		case EEquipmentType::HiddenWeapon :
-			WearHiddenWeapon(equipments, index);
-			break;
+	case EEquipmentType::Weapon:
+		WearWeapon(equipments, index);
+		break;
+	case EEquipmentType::Artifact :
+		WearArtifact(equipments, index);
+		break;
+	case EEquipmentType::HiddenWeapon :
+		WearHiddenWeapon(equipments, index);
+		break;
+	default:
+		break;
 	}
 	UMyGameInstance* MyGameInstance = GetGameInstance();
 	MyGameInstance->GetSect()->RemoveEquipment(equipments[index], index);
@@ -231,7 +234,6 @@ void UEliteDisciple::WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, 
 }
 
 void UEliteDisciple::UseLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
-	//cultivationLaw = laws[index];
 	switch (laws[index]->GetType()) {
 	case ECultivationType::CultivationLaw :
 		UseCultivationLaw(laws, index);
@@ -242,7 +244,11 @@ void UEliteDisciple::UseLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
 	case ECultivationType::AttackSkill :
 		UseAttackSkill(laws, index);
 		break;
+	default:
+		break;
 	}
+	UMyGameInstance* MyGameInstance = GetGameInstance();
+	MyGameInstance->GetSect()->RemoveLaw(laws[index], index);
 }
 
 void UEliteDisciple::UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -250,7 +256,6 @@ void UEliteDisciple::UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int
 	if (cultivationLaw != NULL)
 		MyGameInstance->GetSect()->AddRemoveLaw(cultivationLaw);
 	cultivationLaw = laws[index];
-	MyGameInstance->GetSect()->RemoveCultivationLaw(index);
 }
 
 void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -258,7 +263,6 @@ void UEliteDisciple::UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 i
 	if (workoutLaw != NULL)
 		MyGameInstance->GetSect()->AddRemoveLaw(workoutLaw);
 	workoutLaw = laws[index];
-	MyGameInstance->GetSect()->RemoveWorkoutLaw(index);
 }
 
 void UEliteDisciple::UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 index) {
@@ -266,7 +270,6 @@ void UEliteDisciple::UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 
 	if (attackSkill != NULL)
 		MyGameInstance->GetSect()->AddRemoveLaw(attackSkill);
 	attackSkill = laws[index];
-	MyGameInstance->GetSect()->RemoveAttackSkill(index);
 }
 
 void UEliteDisciple::RemoveAll() {

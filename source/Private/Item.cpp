@@ -78,7 +78,6 @@ FString UItem::GetName() const {
 }
 
 FString UItem::GetRarityName() const {
-	//return UTypeBPLibrary::GetItemRarityName(rarity);
 	return UTypeBPLibrary::GetRarityName(gItemRarity, rarity);
 }
 
@@ -94,7 +93,6 @@ UEquipment::UEquipment() {
 }
 
 void UEquipment::DecideType() {
-	//equipmentType = UTypeBPLibrary::DecideEquipmentType();
 	equipmentType = UTypeBPLibrary::DecideType<EEquipmentType>();
 }
 
@@ -113,19 +111,15 @@ void UEquipment::DecideContent() {
 	attribute = *temp;
 }
 
-bool UEquipment::Enhance(const int32& spiritStone) {
-	// 強化最高20等
-	if (enhancementLevel == 20)
-		return false;
-	else if (CanEnhance(spiritStone, GetEnhancementCost())) {
+void UEquipment::Enhance() {
 		enhancementLevel += 1;
-		return true;
-	}
-	return false;
 }
 
-bool UEquipment::CanEnhance(const int32& spiritStone, int32 cost) {
-	return spiritStone >= cost ? true : false;
+bool UEquipment::CanEnhance(int32 spiritStone) {
+	if (spiritStone >= GetEnhancementCost() && enhancementLevel < gEnhanceLimit)
+		return true;
+	else
+		return false;
 }
 
 int32 UEquipment::GetEnhancementCost() const {
@@ -133,20 +127,15 @@ int32 UEquipment::GetEnhancementCost() const {
 	return 50 * (enhancementLevel + 1);
 }
 
-bool UEquipment::Refine(const int32& spiritStone) {
-	// 強化最高15等
-	if (refiningLevel == 15)
-		return false;
-	else if (CanRefine(spiritStone, GetRefiningCost())) {
-		//spiritStone -= cost;
-		refiningLevel += 1;
-		return true;
-	}
-	return false;
+void UEquipment::Refine() {
+	refiningLevel += 1;
 }
 
-bool UEquipment::CanRefine(const int32& spiritStone, int32 cost) {
-	return spiritStone >= cost ? true : false;
+bool UEquipment::CanRefine(int32 spiritStone) {
+	if (spiritStone >= GetRefiningCost() && refiningLevel < gRefineLimit)
+		return true;
+	else
+		return false;
 }
 
 int32 UEquipment::GetRefiningCost() const {
@@ -182,7 +171,7 @@ float UEquipment::GetBuff() const {
 UCultivationLaw::UCultivationLaw() {
 	DecideType();
 	DecideLaw();
-	lawLevel = 0;
+	lawLevel = 1;
 }
 
 void UCultivationLaw::DecideType() {
@@ -200,19 +189,15 @@ void UCultivationLaw::DecideLaw() {
 	attribute = *temp;
 }
 
-bool UCultivationLaw::LevelUp(const int32& spiritStone) {
-	int cost = GetLevelUpCost();
-	if (lawLevel == 19)
-		return false;
-	else if (CanLevelUp(spiritStone, cost)) {
-		lawLevel += 1;
-		return true;
-	}
-	return false;
+void UCultivationLaw::LevelUp(){
+	lawLevel += 1;
 }
 
-bool UCultivationLaw::CanLevelUp(const int32& spiritStone, int32 cost) {
-	return spiritStone > cost ? true : false ;
+bool UCultivationLaw::CanLevelUp(int32 spiritStone) {
+	if (spiritStone >= GetLevelUpCost() && lawLevel < gLawLevelLimit)
+		return true;
+	else
+		return false;
 }
 
 int32 UCultivationLaw::GetLevel() const {
@@ -220,7 +205,7 @@ int32 UCultivationLaw::GetLevel() const {
 }
 
 void UCultivationLaw::SetLevelZero() {
-	lawLevel = 0;
+	lawLevel = 1;
 }
 
 FString UCultivationLaw::GetLevelName() const {

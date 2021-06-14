@@ -12,15 +12,19 @@ USect::USect() {
 	bloodlinePill = 1000;
 	for (int32 i = 0; i < 5; i++)
 		AddEliteDisciple();
-	for (int32 i = 0; i < 5; i++)
+	for (int32 i = 0; i < 10; i++)
 		AddEquipment();
-	for (int32 i = 0; i < 5; i++)
+	for (int32 i = 0; i < 10; i++)
 		AddLaw();
+	for (int32 i = 0; i < 4; i++)
+		AddSpiritBeast();
+	CreateStore();
 }
 
 void USect::EveryYear() {
 	AddSpiritStone(facilities[0].GetValue());
 	AddMedicinalMaterials(facilities[1].GetValue());
+	store->UpdateGoods();
 }
 
 void USect::SetFacility() {
@@ -53,20 +57,23 @@ bool USect::CanEmployDisciple() {
 
 void USect::ExpelDisciple(int32 index) {
 	eliteDisciples[index]->RemoveAll();
+	UEliteDisciple* temp = eliteDisciples[index];
+	FString str = Message::GetExpelDisciple(temp->GetRarityName(), temp->GetName());
+	logs.Add(str);
 	eliteDisciples.RemoveAt(index);
 }
 
 bool USect::CanExpelDisciple(int32 index) {
 
 	auto CheckENumLimit = [&] (UEquipment* equipment,TArray<UEquipment*> equipments) {
-		if (equipment != NULL && equipments.Num() == 50)
+		if (equipment != NULL && equipments.Num() == gItemLimit)
 			return false;
 		else
 			return true;
 	};
 
 	auto CheckLNumLimit = [&](UCultivationLaw* law, TArray<UCultivationLaw*> laws) {
-		if (law != NULL && laws.Num() == 50)
+		if (law != NULL && laws.Num() == gItemLimit)
 			return false;
 		else
 			return true;
@@ -121,9 +128,15 @@ void USect::AddRemoveEquipment(UEquipment* equipment) {
 		hiddenWeapons.Emplace(equipment);
 }
 
+void USect::BuyEquipment(UEquipment* equipment, int32 index) {
+	UseSpiritStone(equipment->GetPrice() * 2);
+	AddRemoveEquipment(equipment);
+	store->RemoveEquipment(index);
+}
+
 bool USect::CanAddEquipment(UEquipment* equipment) {
 	auto GetReturn = [](TArray<UEquipment*> equipments) {
-		return equipments.Num() < 50 ? true : false;
+		return equipments.Num() < gItemLimit ? true : false;
 	};
 
 	if (equipment->GetType() == EEquipmentType::Weapon)
@@ -162,28 +175,38 @@ void USect::AddSpiritBeast() {
 
 
 void USect::AddRemoveLaw(UCultivationLaw* law) {
+
 	law->SetLevelZero();
-	if (law->GetType() == ECultivationType::CultivationLaw)
+
+	switch (law->GetType()) {
+	case ECultivationType::CultivationLaw:
 		cultivationLaws.Emplace(law);
-	else if (law->GetType() == ECultivationType::WorkoutLaw)
+		break;
+	case ECultivationType::WorkoutLaw:
 		workoutLaws.Emplace(law);
-	else
+		break;
+	default:
 		attackSkills.Emplace(law);
+		break;
+	};
 }
 
 bool USect::CanAddLaw(UCultivationLaw* law) {
 	auto GetReturn = [](TArray<UCultivationLaw*> laws) {
-		return laws.Num() < 50 ? true : false;
+		return laws.Num() < gItemLimit ? true : false;
 	};
 
-	if (law->GetType() == ECultivationType::CultivationLaw)
+	switch (law->GetType()) {
+	case ECultivationType::CultivationLaw:
 		return GetReturn(cultivationLaws);
-
-	else if (law->GetType() == ECultivationType::WorkoutLaw)
+		break;
+	case ECultivationType::WorkoutLaw:
 		return GetReturn(workoutLaws);
-
-	else
+		break;
+	default:
 		return GetReturn(attackSkills);
+		break;
+	};
 }
 
 TArray<FFacility> USect::GetFacilities() {
@@ -226,20 +249,28 @@ TArray<USpiritBeast*> USect::GetSpiritBeasts() {
 	return spiritBeasts;
 }
 
+void USect::SellEquipment(UEquipment* equipment, int32 index) {
+	UEquipment* temp = equipment;
+	FString str = Message::GetSellItem(temp->GetRarityName(), temp->GetName(), temp->GetPrice(), uint8(temp->GetType()), 1);
+	logs.Add(str);
+	AddSpiritStone(equipment->GetPrice());
+	RemoveEquipment(equipment, index);
+}
+
 void USect::RemoveEquipment(UEquipment* equipment, int32 index) {
 	int32 type = uint8(equipment->GetType());
 	switch (type) {
-		case 0:
-			RemoveWeapon(index);
-			break;
-		case 1:
-			RemoveArtifact(index);
-			break;
-		case 2:
-			RemoveHiddenWeapon(index);
-			break;
-		default:
-			break;
+	case 0:
+		RemoveWeapon(index);
+		break;
+	case 1:
+		RemoveArtifact(index);
+		break;
+	case 2:
+		RemoveHiddenWeapon(index);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -255,6 +286,30 @@ void USect::RemoveHiddenWeapon(int32 index) {
 	hiddenWeapons.RemoveAt(index);
 }
 
+void USect::SellLaw(UCultivationLaw* law, int32 index) {
+	FString str = Message::GetSellItem(law->GetRarityName(), law->GetName(), law->GetPrice(), uint8(law->GetType()), 2);
+	logs.Add(str);
+	AddSpiritStone(law->GetPrice());
+	RemoveLaw(law, index);
+}
+
+void USect::RemoveLaw(UCultivationLaw* law, int32 index) {
+	int32 type = uint8(law->GetType());
+	switch (type) {
+	case 0:
+		RemoveCultivationLaw(index);
+		break;
+	case 1:
+		RemoveWorkoutLaw(index);
+		break;
+	case 2:
+		RemoveAttackSkill(index);
+		break;
+	default:
+		break;
+	}
+}
+
 void USect::RemoveCultivationLaw(int32 index) {
 	cultivationLaws.RemoveAt(index);
 }
@@ -268,6 +323,9 @@ void USect::RemoveAttackSkill(int32 index) {
 }
 
 void USect::SellSpiritBeast(int32 index) {
+	USpiritBeast* temp = spiritBeasts[index];
+	FString str = Message::GetSellSpiritBeast(temp->GetName(), temp->GetPrice());
+	logs.Add(str);
 	AddSpiritStone(spiritBeasts[index]->GetPrice());
 	spiritBeasts.RemoveAt(index);
 }
@@ -348,15 +406,15 @@ void USect::CultivationLawSort(int32 index) {
 		});
 	};
 	switch (index) {
-		case 1:
-			Sort(cultivationLaws);
-			break;
-		case 2:
-			Sort(workoutLaws);
-			break;
-		case 3:
-			Sort(attackSkills);
-			break;
+	case 1:
+		Sort(cultivationLaws);
+		break;
+	case 2:
+		Sort(workoutLaws);
+		break;
+	case 3:
+		Sort(attackSkills);
+		break;
 	}
 }
 
@@ -414,6 +472,16 @@ void USect::MakeBloodlinePills(int32 num) {
 
 int32 USect::GetBloodlinePills() const {
 	return bloodlinePill;
+}
+
+void USect::CreateStore() {
+	FString objectName = "UFirm";
+	UFirm* temp = NewObject<UFirm>(this, FName(*objectName));
+	store = temp;
+}
+
+UFirm* USect::GetStrore() const {
+	return store;
 }
 
 TArray<FString> USect::GetLogs() const {

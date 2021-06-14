@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,47 +7,59 @@
 /**
  * 
  */
- // ¥\ªk¼h¦¸ªíªº¸ô®|
+ // åŠŸæ³•å±¤æ¬¡è¡¨çš„è·¯å¾‘
 constexpr const char* gLawLevel = "DataTable'/Game/StarterContent/Datatable/LawLevel/LawLevel.LawLevel'";
 
-// ª««~µ}¦³«×ªí¸ô®|
+// ç‰©å“ç¨€æœ‰åº¦è¡¨è·¯å¾‘
 constexpr const char* gItemRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/ItemRarity.ItemRarity'";
 
-// §Ì¤l¸ê½èªí¸ô®|
+// å¼Ÿå­è³‡è³ªè¡¨è·¯å¾‘
 constexpr const char* gDiscipleRarity = "DataTable'/Game/StarterContent/Datatable/Rarity/DiscipleRarity.DiscipleRarity'";
 
-// ¥\ªkÄİ©Ê¸ô®|ªí
+// åŠŸæ³•å±¬æ€§è·¯å¾‘è¡¨
 constexpr const char* gLawTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/LawTablePath.LawTablePath'";
 
-// ¸Ë³ÆÄİ©Ê¸ô®|ªí
+// è£å‚™å±¬æ€§è·¯å¾‘è¡¨
 constexpr const char* gEquipmentTablePath = "DataTable'/Game/StarterContent/Datatable/ItemTablePath/EquipmentTablePath.EquipmentTablePath'";
 
-// ©R®c¸ô®|ªí
+// å‘½å®®è·¯å¾‘è¡¨
 constexpr const char* gLifePalaceTitle = "DataTable'/Game/StarterContent/Datatable/Title/LifePalaceTitle.LifePalaceTitle'";
 
-// ¬P¨°¸ô®|ªí
+// æ˜Ÿè¾°è·¯å¾‘è¡¨
 constexpr const char* gStarTitle = "DataTable'/Game/StarterContent/Datatable/Title/StarTitle.StarTitle'";
 
-// ©m¤ó¸ô®|ªí
+// å§“æ°è·¯å¾‘è¡¨
 constexpr const char* gSurname = "DataTable'/Game/StarterContent/Datatable/Name/Surname.Surname'";
 
-// ¦W¦r¸ô®|ªí
+// åå­—è·¯å¾‘è¡¨
 constexpr const char* gName = "DataTable'/Game/StarterContent/Datatable/Name/Name.Name'";
 
-// ÆFÃ~¸ô®|ªí
+// éˆç¸è·¯å¾‘è¡¨
 constexpr const char* gSpiritBeast = "DataTable'/Game/StarterContent/Datatable/SpiritBeast/SpiritBeast.SpiritBeast'";
 
-// ÆFÃ~¤Ñ½áªí
+// éˆç¸å¤©è³¦è¡¨
 constexpr const char* gPassiveSkill = "DataTable'/Game/StarterContent/Datatable/SpiritBeast/PassiveSkill.PassiveSkill'";
 
-// ³]¬I¸ô®|ªí
-constexpr const char*  gFacility = "DataTable'/Game/StarterContent/Datatable/Facility/Facility.Facility'";
+// è¨­æ–½è·¯å¾‘è¡¨
+constexpr const char* gFacility = "DataTable'/Game/StarterContent/Datatable/Facility/Facility.Facility'";
 
-// ÆF¥Û¡BÃÄ§÷³Ì¤j¼Æ¶q
+// éˆçŸ³ã€è—¥ææœ€å¤§æ•¸é‡
 constexpr int32 gLimit = 2000000000;
 
-// ¦å¯ß¤É¯Å©Ò»İ­È
+// è¡€è„ˆå‡ç´šæ‰€éœ€å€¼
 constexpr int32 gBloodLine[] = { 200, 1000, 5000 };
 
-// §Ì¤l¤W­­
+// å¼Ÿå­ä¸Šé™
 constexpr int32 gDiscipleLimit = 60;
+
+// ç‰©å“ä¸Šé™
+constexpr int32 gItemLimit = 80;
+
+// å¼·åŒ–ç­‰ç´šä¸Šé™
+constexpr int32 gEnhanceLimit = 20;
+
+// ç²¾ç…‰ç­‰ç´šä¸Šé™
+constexpr int32 gRefineLimit = 15;
+
+// ä¿®ç…‰å±¤æ¬¡ä¸Šé™
+constexpr int32 gLawLevelLimit = 20;

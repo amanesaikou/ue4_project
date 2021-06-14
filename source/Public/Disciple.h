@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,7 +11,7 @@
  * 
  */
 
-// µ×­^§Ì¤l
+// èè‹±å¼Ÿå­
 UCLASS(BlueprintType)
 class DEVELOP_API UEliteDisciple : public UObject {
 
@@ -21,163 +21,163 @@ public:
 
 	UEliteDisciple();
 
-	// ³]©w§Ì¤l©m¦W ¶·­×§ï
+	// è¨­å®šå¼Ÿå­å§“å é ˆä¿®æ”¹
 	void DecideName();
 
-	// Àò¨ú§Ì¤lªº©m¤ó»P¦W¦r¶i¦æ²Õ¦X
+	// ç²å–å¼Ÿå­çš„å§“æ°èˆ‡åå­—é€²è¡Œçµ„åˆ
 	FString GetName(const char* path) const;
 
-	// ³]©w§Ì¤lÀY¹³¯Á¤Ş­È
+	// è¨­å®šå¼Ÿå­é ­åƒç´¢å¼•å€¼
 	void SetImageIndex();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú§Ì¤lÀY¹³¯Á¤Ş­È
+	// ç²å–å¼Ÿå­é ­åƒç´¢å¼•å€¼
 	int32 GetImageIndex() const;
 
-	// ¨M©w§Ì¤l¸ê½è
+	// æ±ºå®šå¼Ÿå­è³‡è³ª
 	void DecideRarity();
 
-	// ¨M©w§Ì¤l©R®c¼Æ¶q
+	// æ±ºå®šå¼Ÿå­å‘½å®®æ•¸é‡
 	void DecideLifePalace();
 
-	// ¨M©w§Ì¤l¬P¨°¼Æ¶q
+	// æ±ºå®šå¼Ÿå­æ˜Ÿè¾°æ•¸é‡
 	void DecideStar();
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú§Ì¤l¦WºÙ
+	// ç²å–å¼Ÿå­åç¨±
 	FString GetName() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¸ê½è
+	// ç²å–è³‡è³ª
 	EDiscipleRarityType GetRarity() const;
 	
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¸ê½è¦WºÙ
+	// ç²å–è³‡è³ªåç¨±
 	FString GetRarityName() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×§ğÀ»
+	// ç²å–æœ€çµ‚æ”»æ“Š
 	int32 GetFinallyAttack() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¥Í©R
+	// ç²å–æœ€çµ‚ç”Ÿå‘½
 	int32 GetFinallyHealth() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú³Ì²×¨¾¿m
+	// ç²å–æœ€çµ‚é˜²ç¦¦
 	int32 GetFinallyDefense() const;
 
-	// ©R®c»P¬P¨°¥[¦¨
+	// å‘½å®®èˆ‡æ˜Ÿè¾°åŠ æˆ
 	float GetBuff() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¬ï¸Ë³Æ
+	// ç©¿è£å‚™
 	void WearEquipment(const TArray<UEquipment*>& weapons, int32 index);
 
-	// ¬ïªZ¾¹
+	// ç©¿æ­¦å™¨
 	void WearWeapon(const TArray<UEquipment*>& weapons, int32 index);
 
-	// ¬ïªkÄ_
+	// ç©¿æ³•å¯¶
 	void WearArtifact(const TArray<UEquipment*>& artifacts, int32 index);
 
-	// ¬ï·t¾¹
+	// ç©¿æš—å™¨
 	void WearHiddenWeapon(const TArray<UEquipment*>& hiddenWeapons, int32 index);
 
-	// ­×½m¥\ªk
+	// ä¿®ç·´åŠŸæ³•
 	UFUNCTION(BlueprintCallable)
 	void UseLaw(const TArray<UCultivationLaw*>& laws, int32 index);
 
-	// ­×½m­×½mªk
+	// ä¿®ç·´ä¿®ç·´æ³•
 	void UseCultivationLaw(const TArray<UCultivationLaw*>& laws, int32 index);
 
-	// ­×½mÁëÅéªk
+	// ä¿®ç·´é›é«”æ³•
 	void UseWorkoutLaw(const TArray<UCultivationLaw*>& laws, int32 index);
 
-	// ­×½mªZ§Ş
+	// ä¿®ç·´æ­¦æŠ€
 	void UseAttackSkill(const TArray<UCultivationLaw*>& laws, int32 index);
 
-	// ²¾°£¥ş³¡¸Ë³Æ»P¥\ªk
+	// ç§»é™¤å…¨éƒ¨è£å‚™èˆ‡åŠŸæ³•
 	void RemoveAll();
 
 	UFUNCTION(BlueprintCallable)
-	// ²æ¤U¸Ë³Æ
+	// è„«ä¸‹è£å‚™
 	void RemoveEquipment(UEquipment* equipment);
 
 	UFUNCTION(BlueprintCallable)
-	// ©ñ±ó­×½m
+	// æ”¾æ£„ä¿®ç·´
 	void RemoveLaw(UCultivationLaw* law);
 
-	// Àò¨úGameInstance
+	// ç²å–GameInstance
 	class UMyGameInstance* GetGameInstance() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±oªZ¾¹
+	// å–å¾—æ­¦å™¨
 	UEquipment* GetWeapon() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±oªkÄ_
+	// å–å¾—æ³•å¯¶
 	UEquipment* GetArtifact() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±o·t¾¹
+	// å–å¾—æš—å™¨
 	UEquipment* GetHiddenWeapon() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±o­×½mªk
+	// å–å¾—ä¿®ç·´æ³•
 	UCultivationLaw* GetCultivationLaw() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±oÁëÅéªk
+	// å–å¾—é›é«”æ³•
 	UCultivationLaw* GetWorkoutLaw() const;
 
 	UFUNCTION(BlueprintCallable)
-	// ¨ú±oªZ§Ş
+	// å–å¾—æ­¦æŠ€
 	UCultivationLaw* GetAttackSkill() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©R®c¼Æ¶q
+	// ç²å–å‘½å®®æ•¸é‡
 	int32 GetLifePalace() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú©R®cºÙ¸¹
+	// ç²å–å‘½å®®ç¨±è™Ÿ
 	FString GetLifePalaceTitle() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¬P¨°¼Æ¶q
+	// ç²å–æ˜Ÿè¾°æ•¸é‡
 	int32 GetStar() const;
 
 	UFUNCTION(BlueprintCallable)
-	// Àò¨ú¬P¨°ºÙ¸¹
+	// ç²å–æ˜Ÿè¾°ç¨±è™Ÿ
 	FString GetStarTitle() const;
 
-	// §Ì¤l¸ê½è
+	// å¼Ÿå­è³‡è³ª
 	EDiscipleRarityType rarity;
 
 protected:
 
-	// µ×­^§Ì¤l°ò¥»Äİ©Ê 
+	// èè‹±å¼Ÿå­åŸºæœ¬å±¬æ€§ 
 	FCommonAttribute attriute;
 
-	// ¤T¥ó¸Ë³Æ
+	// ä¸‰ä»¶è£å‚™
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UEquipment* weapon;			// ªZ¾¹
+	UEquipment* weapon;			// æ­¦å™¨
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UEquipment* artifact;		// ªkÄ_
+	UEquipment* artifact;		// æ³•å¯¶
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UEquipment* hiddenWeapon;	// ·t¾¹
+	UEquipment* hiddenWeapon;	// æš—å™¨
 
-	// ¤TºØ¥\ªk
+	// ä¸‰ç¨®åŠŸæ³•
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UCultivationLaw* cultivationLaw; // ¤ßªk
+	UCultivationLaw* cultivationLaw; // å¿ƒæ³•
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UCultivationLaw* workoutLaw;	 // ÁëÅéªk
+	UCultivationLaw* workoutLaw;	 // é›é«”æ³•
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UCultivationLaw* attackSkill;	 // ªZ§Ş
+	UCultivationLaw* attackSkill;	 // æ­¦æŠ€
 
-	// ©R®c¼Æ ³Ì¦h13
+	// å‘½å®®æ•¸ æœ€å¤š13
 	int32 lifePalace;
 
-	// ¬P¨°¼Æ ³Ì¦h9
+	// æ˜Ÿè¾°æ•¸ æœ€å¤š9
 	int32 stars;
 
 };

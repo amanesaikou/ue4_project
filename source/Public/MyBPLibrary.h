@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -8,46 +8,46 @@
 #include "Math/Color.h"
 #include "MyBPLibrary.generated.h"
 
-// ­×½mªkºØÃş
+// ä¿®ç·´æ³•ç¨®é¡
 UENUM(BlueprintType)
 enum class ECultivationType : uint8 {
-	CultivationLaw	= 0,	// ¤ßªk
-	WorkoutLaw		= 1,	// ÁëÅéªk
-	AttackSkill		= 2,	// ªZ§Ş
+	CultivationLaw	= 0,	// å¿ƒæ³•
+	WorkoutLaw		= 1,	// é›é«”æ³•
+	AttackSkill		= 2,	// æ­¦æŠ€
 };
 
-// ¸Ë³ÆºØÃş
+// è£å‚™ç¨®é¡
 UENUM(BlueprintType)
 enum class EEquipmentType : uint8 {
-	Weapon			= 0,	// ªZ¾¹
-	Artifact		= 1,	// ªkÄ_
-	HiddenWeapon	= 2,	// ·t¾¹
+	Weapon			= 0,	// æ­¦å™¨
+	Artifact		= 1,	// æ³•å¯¶
+	HiddenWeapon	= 2,	// æš—å™¨
 };
 
-// ¹D¨ãµ}¦³«×
+// é“å…·ç¨€æœ‰åº¦
 UENUM(BlueprintType)
 enum class EItemRarityType : uint8 {
-	Immortal		= 0, // ¥P¯Å		1%
-	Holy			= 1, // ¸t¯Å		3%
-	Sky				= 2, // ¤Ñ¯Å		5%
-	Earth			= 3, // ¦a¯Å		8%
-	Mysterious		= 4, // ¥È¯Å		14%
-	Yellow			= 5, // ¶À¯Å		24%
-	Human			= 6, // ¤H¯Å		45%
+	Immortal		= 0, // ä»™ç´š		1%
+	Holy			= 1, // è–ç´š		3%
+	Sky				= 2, // å¤©ç´š		5%
+	Earth			= 3, // åœ°ç´š		8%
+	Mysterious		= 4, // ç„ç´š		14%
+	Yellow			= 5, // é»ƒç´š		24%
+	Human			= 6, // äººç´š		45%
 };
 
-// §Ì¤lµ}¦³«×
+// å¼Ÿå­ç¨€æœ‰åº¦
 UENUM(BlueprintType)
 enum class EDiscipleRarityType : uint8 {
-	SonofEra		= 0,	// ¬ö¤¸¤§¤l	1%
-	Genius			= 1,	// ¤ÑÅº		4%
-	Extraordinary	= 2,	// «D¤Z		9%
-	Outstanding		= 3,	// ³Ç¥X		12%
-	Excellent		= 4,	// Àu¨q		26%
-	Normal			= 5,	// ¤@¯ë		48%
+	SonofEra		= 0,	// ç´€å…ƒä¹‹å­	1%
+	Genius			= 1,	// å¤©é©•		4%
+	Extraordinary	= 2,	// éå‡¡		9%
+	Outstanding		= 3,	// å‚‘å‡º		12%
+	Excellent		= 4,	// å„ªç§€		26%
+	Normal			= 5,	// ä¸€èˆ¬		48%
 };
 
-// ÆFÃ~¤Ñ½áºØÃş
+// éˆç¸å¤©è³¦ç¨®é¡
 UENUM(BlueprintType)
 enum class EPassiveSkill : uint8 {
 	Health	= 0,
@@ -55,20 +55,20 @@ enum class EPassiveSkill : uint8 {
 	Defense = 2,
 };
 
-// ¦@¥Î¸ê®Æµ²ºc
+// å…±ç”¨è³‡æ–™çµæ§‹
 USTRUCT(BlueprintType)
 struct FCommonData : public FTableRowBase {
 
 	GENERATED_BODY()
 
-	// «Øºc¤l
+	// å»ºæ§‹å­
 	FCommonData();
 
-	// ¥\ªk¼h¦¸ ª««~µ}¦³«×µ¥
+	// åŠŸæ³•å±¤æ¬¡ ç‰©å“ç¨€æœ‰åº¦ç­‰
 	UPROPERTY(BlueprintReadWrite)
 	FString name;
 
-	// ­×½mÆF¥Ûªá¶O ª««~µ}¦³«×¾÷²vµ¥
+	// ä¿®ç·´éˆçŸ³èŠ±è²» ç‰©å“ç¨€æœ‰åº¦æ©Ÿç‡ç­‰
 	UPROPERTY(BlueprintReadWrite)
 	int32 number;
 
@@ -78,16 +78,16 @@ struct FCommonData : public FTableRowBase {
 
 };
 
-// ª««~ªí¸ê®Æ
+// ç‰©å“è¡¨è³‡æ–™
 USTRUCT(BlueprintType)
 struct FDataTablePath : public FTableRowBase {
 
 	GENERATED_BODY()
 
-	// «Øºc¤l
+	// å»ºæ§‹å­
 	FDataTablePath();
 
-	// ÀÉ®×¸ô®|
+	// æª”æ¡ˆè·¯å¾‘
 	UPROPERTY(BlueprintReadWrite)
 	FString tablePath;
 
@@ -95,13 +95,13 @@ struct FDataTablePath : public FTableRowBase {
 
 };
 
-// ¦UºØ¦r¦ê¸ê®Æµ²ºc
+// å„ç¨®å­—ä¸²è³‡æ–™çµæ§‹
 USTRUCT(BlueprintType)
 struct FCommonString : public FTableRowBase {
 
 	GENERATED_BODY()
 
-	// «Øºc¤l
+	// å»ºæ§‹å­
 	FCommonString();
 
 	// 
@@ -115,59 +115,43 @@ struct FCommonString : public FTableRowBase {
 /**
  * 
  */
- // ³B²z¦U­ÓenumªºÃş§O
+ // è™•ç†å„å€‹enumçš„é¡åˆ¥
 UCLASS()
 class DEVELOP_API UTypeBPLibrary : public UBlueprintFunctionLibrary {
 
 	GENERATED_BODY()
 
 public:
-	// ¨M©wª««~µ}¦³«×»P§Ì¤l¸ê½èªº¼ÒªO
+	// æ±ºå®šç‰©å“ç¨€æœ‰åº¦èˆ‡å¼Ÿå­è³‡è³ªçš„æ¨¡æ¿
 	template<class T>
 	static T DecideRarity(const char* tablePath);
 
-	// ®Ú¾Ú¾÷²vÀò¨ú¹ïÀ³ªºµ}¦³«×
+	// æ ¹æ“šæ©Ÿç‡ç²å–å°æ‡‰çš„ç¨€æœ‰åº¦
 	static uint8 GetRarityIndex(TArray<int32>& probabilities);
 
-	// ¨M©w­×·Òªk»P¸Ë³ÆºØÃşªº¼ÒªO
+	// æ±ºå®šä¿®ç…‰æ³•èˆ‡è£å‚™ç¨®é¡çš„æ¨¡æ¿
 	template<class T>
 	static T DecideType();
 
-	// Àò¨úª««~µ}¦³«×©Î§Ì¤l¸ê½èªº¦WºÙªº¼ÒªO
+	// ç²å–ç‰©å“ç¨€æœ‰åº¦æˆ–å¼Ÿå­è³‡è³ªçš„åç¨±çš„æ¨¡æ¿
 	template<class T>
 	static FString GetRarityName(const char* tablePath, T rarity);
 
 	UFUNCTION(BlueprintCallable)
 	static FLinearColor GetDiscipleColor(EDiscipleRarityType rarity);
-
-	static bool IsSonofEra(EDiscipleRarityType rarity);
-	static bool IsGenius(EDiscipleRarityType rarity);
-	static bool IsExtraordinary(EDiscipleRarityType rarity);
-	static bool IsOutstanding(EDiscipleRarityType rarity);
-	static bool IsExcellent(EDiscipleRarityType rarity);
-	static bool IsNormal(EDiscipleRarityType rarity);
-	/*
-	static bool IsImmortal(EItemRarityType rarity);
-	static bool IsHoly(EItemRarityType rarity);
-	static bool IsSky(EItemRarityType rarity);
-	static bool IsEarth(EItemRarityType rarity);
-	static bool IsImmortal(EItemRarityType rarity);
-	static bool IsImmortal(EItemRarityType rarity);
-	static bool IsImmortal(EItemRarityType rarity);
-	*/
 };
 
-// ¸ê®Æ¶°¨ç¦¡®w
+// è³‡æ–™é›†å‡½å¼åº«
 //UCLASS()
 class DEVELOP_API UDatasetBPLibrary {//: public UBlueprintFunctionLibrary {
 
 	//GENERATED_BODY()
 
 public:
-	// Àò¨ú¾÷²v ª««~µ}¦³«× §Ì¤l¸ê½èµ¥
+	// ç²å–æ©Ÿç‡ ç‰©å“ç¨€æœ‰åº¦ å¼Ÿå­è³‡è³ªç­‰
 	static TArray<int32> GetRarityProbability(const char* tablePath);
 
-	// Àò¨ú¸ê®Æªí¸ô®|
+	// ç²å–è³‡æ–™è¡¨è·¯å¾‘
 	static const char* GetTablePath(const char* path, int32 index);
 	//
 	static FName FromIntToFName(int32 num);
