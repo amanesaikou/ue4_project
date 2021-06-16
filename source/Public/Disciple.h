@@ -11,6 +11,37 @@
  * 
  */
 
+ // 儲存弟子的結構
+USTRUCT(BlueprintType)
+struct FDisciple {
+	GENERATED_BODY()
+	FDisciple() {};
+	UPROPERTY(BlueprintReadWrite)
+	EDiscipleRarityType rarity;
+	UPROPERTY(BlueprintReadWrite)
+	FCommonAttribute attribute;
+	UPROPERTY(BlueprintReadWrite)
+	FEquip weapon;
+	UPROPERTY(BlueprintReadWrite)
+	FEquip artifact;
+	UPROPERTY(BlueprintReadWrite)
+	FEquip hiddenWeapon;
+	UPROPERTY(BlueprintReadWrite)
+	FLaw cultivationLaw;
+	UPROPERTY(BlueprintReadWrite)
+	FLaw workoutLaw;
+	UPROPERTY(BlueprintReadWrite)
+	FLaw attackSkill;
+	UPROPERTY(BlueprintReadWrite)
+	int32 lifePalace;
+	UPROPERTY(BlueprintReadWrite)
+	int32 stars;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<bool> hasEquipments = { false, false, false };
+	UPROPERTY(BlueprintReadWrite)
+	TArray<bool> hasLaws = { false, false, false };
+};
+
 // 菁英弟子
 UCLASS(BlueprintType)
 class DEVELOP_API UEliteDisciple : public UObject {
@@ -20,6 +51,11 @@ class DEVELOP_API UEliteDisciple : public UObject {
 public:
 
 	UEliteDisciple();
+
+	void Load(FDisciple dis, int32 i);
+
+	UFUNCTION(BlueprintCallable)
+	FDisciple Save();
 
 	// 設定弟子姓名 須修改
 	void DecideName();

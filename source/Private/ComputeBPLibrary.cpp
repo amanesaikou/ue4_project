@@ -47,7 +47,7 @@ FString Message::GetExpelDisciple(FString rarity, FString name) {
 }
 
 FString Message::GetNewEquipment(FString rarity, FString name, uint8 type) {
-	TArray<FString> types = { TEXT("武器"), TEXT("法寶"), TEXT("暗器")};
+	TArray<FString> types = GetItemType(1);
 	TArray<FStringFormatArg> args = {
 		FStringFormatArg(rarity), FStringFormatArg(types[type]), FStringFormatArg(name)
 	};
@@ -56,7 +56,7 @@ FString Message::GetNewEquipment(FString rarity, FString name, uint8 type) {
 }
 
 FString Message::GetNewEquipment(FString rarity, FString name, uint8 type, int32 price) {
-	TArray<FString> types = { TEXT("武器"), TEXT("法寶"), TEXT("暗器") };
+	TArray<FString> types = GetItemType(1);
 	TArray<FStringFormatArg> args = {
 		FStringFormatArg(rarity), FStringFormatArg(types[type]),
 		FStringFormatArg(name), FStringFormatArg(price)
@@ -66,7 +66,7 @@ FString Message::GetNewEquipment(FString rarity, FString name, uint8 type, int32
 }
 
 FString Message::GetNewLaw(FString rarity, FString name, uint8 type) {
-	TArray<FString> types = { TEXT("修煉法"), TEXT("鍛體法"), TEXT("武技") };
+	TArray<FString> types = GetItemType(2);
 	TArray<FStringFormatArg> args = {
 		FStringFormatArg(rarity), FStringFormatArg(types[type]), FStringFormatArg(name)
 	};
@@ -75,7 +75,7 @@ FString Message::GetNewLaw(FString rarity, FString name, uint8 type) {
 }
 
 FString Message::GetNewLaw(FString rarity, FString name, uint8 type, int32 price) {
-	TArray<FString> types = { TEXT("修煉法"), TEXT("鍛體法"), TEXT("武技") };
+	TArray<FString> types = GetItemType(2);
 	TArray<FStringFormatArg> args = {
 		FStringFormatArg(rarity), FStringFormatArg(types[type]),
 		FStringFormatArg(name), FStringFormatArg(price)
@@ -85,18 +85,7 @@ FString Message::GetNewLaw(FString rarity, FString name, uint8 type, int32 price
 }
 
 FString Message::GetSellItem(FString rarity, FString name, int32 price, uint8 type, int16 mode) {
-	TArray<FString> types;
-	switch (mode)
-	{
-	case 1:	// 裝備
-		types = { TEXT("武器"), TEXT("法寶"), TEXT("暗器") };
-		break;
-	case 2: // 功法
-		types = { TEXT("修煉法"), TEXT("鍛體法"), TEXT("武技") };
-		break;
-	default:
-		break;
-	}
+	TArray<FString> types = GetItemType(mode);
 	TArray<FStringFormatArg> args = {
 		FStringFormatArg(rarity), FStringFormatArg(types[type]),
 		FStringFormatArg(name), FStringFormatArg(price)
@@ -107,7 +96,23 @@ FString Message::GetSellItem(FString rarity, FString name, int32 price, uint8 ty
 
 FString Message::GetSellSpiritBeast(FString name, int32 price) {
 	TArray<FStringFormatArg> args = { FStringFormatArg(name), FStringFormatArg(price) };
-	FString str = FString::Format(TEXT("您出售{0}，獲得了{1}靈石。"), args);
+	FString str = FString::Format(TEXT("您出售靈獸{0}，獲得了{1}靈石。"), args);
+	return str;
+}
+
+FString Message::GetBuyItem(FString rarity, FString name, int32 price, uint8 type, int16 mode) {
+	TArray<FString> types = GetItemType(mode);
+	TArray<FStringFormatArg> args = {
+		FStringFormatArg(rarity), FStringFormatArg(types[type]),
+		FStringFormatArg(name), FStringFormatArg(price)
+	};
+	FString str = FString::Format(TEXT("您購買{0}{1}{2}，花費了{3}靈石。"), args);
+	return str;
+}
+
+FString Message::GetBuySpiritBeast(FString name, int32 price) {
+	TArray<FStringFormatArg> args = {FStringFormatArg(name), FStringFormatArg(price)};
+	FString str = FString::Format(TEXT("您購買靈獸{0}，花費了{1}靈石。"), args);
 	return str;
 }
 
@@ -117,6 +122,20 @@ FString Message::GetFacilityLevelUp(FString name, int32 lv, const int32 cost) {
 	};
 	FString str = FString::Format(TEXT("您花費{0}靈石，將{1}提升至{2}等。"), args);
 	return str;
+}
+
+TArray<FString> Message::GetItemType(int32 mode) {
+	switch (mode) {
+	case 1:
+		return TArray<FString>({ TEXT("武器"), TEXT("法寶"), TEXT("暗器") });
+		break;
+	case 2:
+		return TArray<FString>({ TEXT("修煉法"), TEXT("鍛體法"), TEXT("武技") });
+		break;
+	default:
+		return TArray<FString>();
+		break;
+	}
 }
 
 int32 UConstantBPLibrary::GetDiscipleLimit() {

@@ -55,6 +55,9 @@ constexpr int32 gDiscipleLimit = 60;
 // 物品上限
 constexpr int32 gItemLimit = 80;
 
+// 靈獸上限
+constexpr int32 gSpiritBeastLimit = 24;
+
 // 強化等級上限
 constexpr int32 gEnhanceLimit = 20;
 

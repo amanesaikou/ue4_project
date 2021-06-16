@@ -38,6 +38,28 @@ struct FPassiveSkill : public FTableRowBase {
 	int32 value;
 };
 
+// 儲存靈獸的結構
+USTRUCT(BlueprintType)
+struct FSB {
+	GENERATED_BODY()
+	FSB() {};
+
+	UPROPERTY(BlueprintReadWrite)
+	FCommonAttribute attribute;
+	UPROPERTY(BlueprintReadWrite)
+	FPassiveSkill passiveSkill;
+	UPROPERTY(BlueprintReadWrite)
+	int32 star;
+	UPROPERTY(BlueprintReadWrite)
+	int32 blood;
+	UPROPERTY(BlueprintReadWrite)
+	int32 grade;
+	UPROPERTY(BlueprintReadWrite)
+	int32 price;
+	UPROPERTY(BlueprintReadWrite)
+	int32 bloodLineValue;
+};
+
 // 靈獸
 UCLASS(BlueprintType)
 class DEVELOP_API USpiritBeast : public UObject {
@@ -46,6 +68,11 @@ class DEVELOP_API USpiritBeast : public UObject {
 public:
 	// 建構子
 	USpiritBeast();
+
+	void Load(FSB SB);
+
+	UFUNCTION(BlueprintCallable)
+	FSB Save();
 
 	// 設定資料
 	void DecideContent();
@@ -61,6 +88,9 @@ public:
 
 	// 決定品級
 	void DecideGrade();
+
+	// 決定價錢
+	void DecidePrice();
 
 	UFUNCTION(BlueprintCallable)
 	// 獲取名字

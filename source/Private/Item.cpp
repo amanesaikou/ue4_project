@@ -92,6 +92,27 @@ UEquipment::UEquipment() {
 	refiningLevel = 0;
 }
 
+void UEquipment::Load(FEquip equipment) {
+	rarity = equipment.rarity;
+	attribute = equipment.attribute;
+	price = equipment.price;
+	equipmentType = equipment.equipmentType;
+	enhancementLevel = equipment.enhancementLevel;
+	refiningLevel = equipment.refiningLevel;
+}
+
+
+FEquip UEquipment::Save() {
+	FEquip equipment;
+	equipment.rarity = rarity;
+	equipment.attribute = attribute;
+	equipment.price = price;
+	equipment.equipmentType = equipmentType;
+	equipment.enhancementLevel = enhancementLevel;
+	equipment.refiningLevel = refiningLevel;
+	return equipment;
+}
+
 void UEquipment::DecideType() {
 	equipmentType = UTypeBPLibrary::DecideType<EEquipmentType>();
 }
@@ -172,6 +193,24 @@ UCultivationLaw::UCultivationLaw() {
 	DecideType();
 	DecideLaw();
 	lawLevel = 1;
+}
+
+void UCultivationLaw::Load(FLaw law) {
+	rarity = law.rarity;
+	attribute = law.attribute;
+	price = law.price;
+	cultivationType = law.cultivationType;
+	lawLevel = law.lawLevel;
+}
+
+FLaw UCultivationLaw::Save() {
+	FLaw law;
+	law.rarity = rarity;
+	law.attribute = attribute;
+	law.price = price;
+	law.cultivationType = cultivationType;
+	law.lawLevel = lawLevel;
+	return law;
 }
 
 void UCultivationLaw::DecideType() {

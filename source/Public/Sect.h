@@ -27,6 +27,9 @@ public:
 	USect();
 
 	UFUNCTION(BlueprintCallable)
+	void Create();
+
+	UFUNCTION(BlueprintCallable)
 	void EveryYear();
 
 	void SetFacility();
@@ -52,6 +55,10 @@ public:
 	bool CanExpelDisciple(int32 index);
 
 	UFUNCTION(BlueprintCallable)
+	// 有足夠的靈石可以購買嗎
+	bool CanBuy(int32 price);
+
+	UFUNCTION(BlueprintCallable)
 	// 加入新的裝備
 	void AddEquipment();
 
@@ -72,8 +79,20 @@ public:
 	void AddLaw();
 
 	UFUNCTION(BlueprintCallable)
-	//加入新的靈獸
+	// 購買商行出售的功法
+	void BuyLaw(UCultivationLaw* law, int32 index);
+
+	UFUNCTION(BlueprintCallable)
+	// 加入新的靈獸
 	void AddSpiritBeast();
+
+	UFUNCTION(BlueprintCallable)
+	// 可以加入新的靈獸嗎
+	bool CanAddSpiritBeast();
+
+	UFUNCTION(BlueprintCallable)
+	// 購買商行出售的靈獸
+	void BuySpiritBeast(USpiritBeast* SB, int32 index);
 
 	UFUNCTION(BlueprintCallable)
 	// 加回弟子放棄修練的功法或加入新的功法
@@ -253,15 +272,31 @@ public:
 	// 清除log
 	void ClearLogs();
 
+	UFUNCTION(BlueprintCallable)
+	void LoadLaws(TArray<FLaw> load, int32 mode);
+
+	UFUNCTION(BlueprintCallable)
+	void LoadEquipments(TArray<FEquip> load, int32 mode);
+
+	UFUNCTION(BlueprintCallable)
+	void LoadSpiritBeast(TArray<FSB> load);
+
+	UFUNCTION(BlueprintCallable)
+	void LoadDisciples(TArray<FDisciple> load);
+
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	// 弟子
 	TArray<UEliteDisciple*> eliteDisciples;
 
 	// uobject建立名稱數字
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 eliteDiscipleNums = 0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 equipmentNums = 0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 lawNums = 0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 spiritBeastNums = 0;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -312,6 +347,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UFirm* store;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FString> logs;
 
 };

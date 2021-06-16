@@ -42,7 +42,13 @@ public:
 
 	static FString GetSellSpiritBeast(FString name, int32 price);
 
+	static FString GetBuyItem(FString rarity, FString name, int32 price, uint8 type, int16 mode);
+
+	static FString GetBuySpiritBeast(FString name, int32 price);
+
 	static FString GetFacilityLevelUp(FString name, int32 lv, int32 cost);
+
+	static TArray<FString> GetItemType(int32 mode);
 };
 
 UCLASS()

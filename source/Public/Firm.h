@@ -29,9 +29,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<UEquipment*> GetEquipments();
 
-	UEquipment* GetEquipment(int32 index);
-
 	void RemoveEquipment(int32 index);
+
+	void RemoveLaw(int32 index);
+
+	void RemoveSpiritBeast(int32 index);
 
 	UFUNCTION(BlueprintCallable)
 	TArray<UCultivationLaw*> GetLaws();

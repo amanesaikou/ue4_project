@@ -4,8 +4,8 @@
 #include "MyGameInstance.h"
 
 UMyGameInstance::UMyGameInstance() {
-	sect = NewObject<USect>(this, TEXT("sect"));
 	CreateEnemys();
+	CreateSect();
 }
 
 void UMyGameInstance::CreateEnemys() {
@@ -16,6 +16,14 @@ void UMyGameInstance::CreateEnemys() {
 	temp.SetDefense(100000);
 	for (int32 i = 0; i < 10; i++)
 		enemys.Emplace(temp);
+}
+
+void UMyGameInstance::CreateSect() {
+	sect = NewObject<USect>(this, TEXT("sect"));
+}
+
+void UMyGameInstance::NewSect() {
+	sect->Create();
 }
 
 USect* UMyGameInstance::GetSect() {

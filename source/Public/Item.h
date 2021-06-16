@@ -56,6 +56,44 @@ struct FCommonAttribute : public FTableRowBase {
 
 };
 
+// 儲存功法的結構
+USTRUCT(BlueprintType)
+struct FLaw {
+	GENERATED_BODY()
+	FLaw() {};
+	UPROPERTY(BlueprintReadWrite)
+	FCommonAttribute attribute;
+	UPROPERTY(BlueprintReadWrite)
+	// 物品稀有度
+	EItemRarityType rarity;
+	UPROPERTY(BlueprintReadWrite)
+	int32 price;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	ECultivationType cultivationType;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 lawLevel;
+};
+
+// 儲存裝備的結構
+USTRUCT(BlueprintType)
+struct FEquip {
+	GENERATED_BODY()
+	FEquip() {};
+
+	UPROPERTY(BlueprintReadWrite)
+	FCommonAttribute attribute;
+	UPROPERTY(BlueprintReadWrite)
+	EItemRarityType rarity;
+	UPROPERTY(BlueprintReadWrite)
+	int32 price;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	EEquipmentType equipmentType;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 enhancementLevel;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 refiningLevel;
+};
+
 // 物品基類
 UCLASS()
 class DEVELOP_API UItem : public UObject {
@@ -67,6 +105,7 @@ public:
 
 	int32 GetID() const;
 
+	UPROPERTY(BlueprintReadWrite)
 	// 物品稀有度
 	EItemRarityType rarity;
 
@@ -83,7 +122,8 @@ protected:
 	// 物品屬性
 	UPROPERTY(BlueprintReadWrite)
 	FCommonAttribute attribute;
-
+	
+	UPROPERTY(BlueprintReadWrite)
 	int32 price;
 
 	void DecideRarity();
@@ -99,6 +139,11 @@ class DEVELOP_API UEquipment : public UItem {
 
 public:
 	UEquipment();
+
+	void Load(FEquip equipment);
+
+	UFUNCTION(BlueprintCallable)
+	FEquip Save();
 
 	// 確定是哪種裝備
 	void DecideType();
@@ -175,6 +220,11 @@ class DEVELOP_API UCultivationLaw : public UItem {
 
 public:
 	UCultivationLaw();
+
+	void Load(FLaw law);
+
+	UFUNCTION(BlueprintCallable)
+	FLaw Save();
 
 	// 確定是哪種功法
 	void DecideType();

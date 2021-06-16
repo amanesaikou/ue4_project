@@ -6,8 +6,11 @@
 #include "Constant.h"
 
 USect::USect() {
+}
+
+void USect::Create() {
 	SetFacility();
-	spiritStone = 2000000000;
+	spiritStone = gLimit;
 	medicinalMaterials = 10000000;
 	bloodlinePill = 1000;
 	for (int32 i = 0; i < 5; i++)
@@ -24,7 +27,7 @@ USect::USect() {
 void USect::EveryYear() {
 	AddSpiritStone(facilities[0].GetValue());
 	AddMedicinalMaterials(facilities[1].GetValue());
-	store->UpdateGoods();
+	//store->UpdateGoods();
 }
 
 void USect::SetFacility() {
@@ -102,6 +105,10 @@ bool USect::CanExpelDisciple(int32 index) {
 
 }
 
+bool USect::CanBuy(int32 price) {
+	return spiritStone >= price * 2 ? true : false;
+}
+
 void USect::AddEquipment() {
 	FString objectName = "UEquipment";
 	objectName.AppendInt(equipmentNums++);
@@ -131,6 +138,9 @@ void USect::AddRemoveEquipment(UEquipment* equipment) {
 void USect::BuyEquipment(UEquipment* equipment, int32 index) {
 	UseSpiritStone(equipment->GetPrice() * 2);
 	AddRemoveEquipment(equipment);
+	FString str = Message::GetBuyItem(equipment->GetRarityName(), equipment->GetName(),
+		 equipment->GetPrice() * 2, uint8(equipment->GetType()), 1);
+	logs.Add(str);
 	store->RemoveEquipment(index);
 }
 
@@ -160,10 +170,20 @@ void USect::AddLaw() {
 	}
 	else {
 		AddSpiritStone(temp->GetPrice());
-		FString str = Message::GetNewLaw(temp->GetRarityName(), temp->GetName(), uint8(temp->GetType()), temp->GetPrice());
+		FString str = Message::GetNewLaw(temp->GetRarityName(), temp->GetName(),
+			uint8(temp->GetType()), temp->GetPrice());
 		logs.Add(str);
 		temp = NULL;
 	}
+}
+
+void USect::BuyLaw(UCultivationLaw* law, int32 index) {
+	UseSpiritStone(law->GetPrice() * 2);
+	AddRemoveLaw(law);
+	FString str = Message::GetBuyItem(law->GetRarityName(), law->GetName(), law->GetPrice() * 2,
+		uint8(law->GetType()), 2);
+	logs.Add(str);
+	store->RemoveLaw(index);
 }
 
 void USect::AddSpiritBeast() {
@@ -171,6 +191,18 @@ void USect::AddSpiritBeast() {
 	objectName.AppendInt(spiritBeastNums++);
 	USpiritBeast* temp = NewObject<USpiritBeast>(this, FName(*objectName));
 	spiritBeasts.Emplace(temp);
+}
+
+bool USect::CanAddSpiritBeast() {
+	return spiritBeasts.Num() < gSpiritBeastLimit ? true : false;
+}
+
+void USect::BuySpiritBeast(USpiritBeast* SB, int32 index) {
+	UseSpiritStone(SB->GetPrice() * 2);
+	spiritBeasts.Emplace(SB);
+	FString str = Message::GetBuySpiritBeast(SB->GetName(), SB->GetPrice() * 2);
+	logs.Add(str);
+	store->RemoveSpiritBeast(index);
 }
 
 
@@ -490,4 +522,77 @@ TArray<FString> USect::GetLogs() const {
 
 void USect::ClearLogs() {
 	logs.Empty();
+}
+
+void USect::LoadLaws(TArray<FLaw> load, int32 mode) {
+	auto LoadLaw = [&](TArray<UCultivationLaw*>& laws, FString objectName) {
+		laws.Empty();
+		for (int32 i = 0; i < load.Num(); i++) {
+			objectName.AppendInt(i);
+			UCultivationLaw* temp = NewObject<UCultivationLaw>(this, FName(*objectName));
+			temp->Load(load[i]);
+			laws.Emplace(temp);
+		}
+	};
+	switch (mode)
+	{
+	case 1:
+		LoadLaw(cultivationLaws, "LoadCultivationLaw");
+		break;
+	case 2:
+		LoadLaw(workoutLaws, "LoadWorkoutLaw");
+		break;
+	case 3:
+		LoadLaw(attackSkills, "LoadAttackSkillLaw");
+		break;
+	default:
+		break;
+	}
+}
+
+void USect::LoadEquipments(TArray<FEquip> load, int32 mode) {
+	auto LoadEquipment = [&](TArray<UEquipment*>& equipments, FString objectName) {
+		equipments.Empty();
+		for (int32 i = 0; i < load.Num(); i++) {
+			objectName.AppendInt(i);
+			UEquipment* temp = NewObject<UEquipment>(this, FName(*objectName));
+			temp->Load(load[i]);
+			equipments.Emplace(temp);
+		}
+	};
+	switch (mode)
+	{
+	case 1:
+		LoadEquipment(weapons, "LoadWeapon");
+		break;
+	case 2:
+		LoadEquipment(artifacts, "LoadArtifact");
+		break;
+	case 3:
+		LoadEquipment(hiddenWeapons, "LoadHiddenWeapon");
+		break;
+	default:
+		break;
+	}
+}
+
+void USect::LoadSpiritBeast(TArray<FSB> load) {
+	for (int32 i = 0; i < load.Num(); i++) {
+		FString objectName = "LoadSpiritBeast";
+		objectName.AppendInt(i);
+		USpiritBeast* temp = NewObject<USpiritBeast>(this, FName(*objectName));
+		temp->Load(load[i]);
+		spiritBeasts.Emplace(temp);
+	}
+}
+
+void USect::LoadDisciples(TArray<FDisciple> load) {
+	for (int32 i = 0; i < load.Num(); i++) {
+		FString objectName = "LoadDisciple";
+		objectName.AppendInt(i);
+		UEliteDisciple* temp = NewObject<UEliteDisciple>(this, FName(*objectName));
+		temp->Load(load[i], i);
+		//AddEliteDisciple();
+		eliteDisciples.Emplace(temp);
+	}
 }

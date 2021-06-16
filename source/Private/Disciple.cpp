@@ -18,6 +18,58 @@ UEliteDisciple::UEliteDisciple() {
 	DecideStar();
 }
 
+void UEliteDisciple::Load(FDisciple dis, int32 i) {
+	FString objectName = "LoadDisciple";
+	objectName.AppendInt(i);
+	objectName += "Equipmet";
+	attriute = dis.attribute;
+
+	auto LoadEquipment = [&] (int32 i, UEquipment* equip, FEquip& loadEquip) {
+		objectName.AppendInt(i);
+		UEquipment* temp = NewObject<UEquipment>(this, FName(*objectName));
+		equip = temp;
+		equip->Load(loadEquip);
+		return equip;
+	};
+
+	if (dis.hasEquipments[0])
+		weapon = LoadEquipment(1, weapon, dis.weapon);
+	if (dis.hasEquipments[1])
+		artifact = LoadEquipment(2, artifact, dis.artifact);
+	if (dis.hasEquipments[2])
+		hiddenWeapon = LoadEquipment(3, hiddenWeapon, dis.hiddenWeapon);
+
+	rarity = dis.rarity;
+	lifePalace = dis.lifePalace;
+	stars = dis.stars;
+	
+}
+
+FDisciple UEliteDisciple::Save() {
+	auto EIsVaild = [&](UEquipment* equipment) {
+		return equipment == NULL ? false : true;
+	};
+	FDisciple dis;
+	dis.rarity = rarity;
+	dis.attribute = attriute;
+	if (EIsVaild(weapon)) {
+		dis.weapon = weapon->Save();
+		dis.hasEquipments[0] = true;
+	}
+	if (EIsVaild(artifact)) {
+		dis.artifact = artifact->Save();
+		dis.hasEquipments[1] = true;
+	}
+	if (EIsVaild(hiddenWeapon)) {
+		dis.hiddenWeapon = hiddenWeapon->Save();
+		dis.hasEquipments[2] = true;
+	}
+	dis.lifePalace = lifePalace;
+	dis.stars = stars;
+
+	return dis;
+}
+
 void UEliteDisciple::DecideName() {
 	FString name = "";
 	name += GetName(gSurname);

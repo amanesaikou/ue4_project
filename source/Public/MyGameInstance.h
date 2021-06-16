@@ -22,6 +22,12 @@ public:
 	void CreateEnemys();
 
 	UFUNCTION(BlueprintCallable)
+	void CreateSect();
+
+	UFUNCTION(BlueprintCallable)
+	void NewSect();
+
+	UFUNCTION(BlueprintCallable)
 	USect* GetSect();
 
 	UFUNCTION(BlueprintCallable)

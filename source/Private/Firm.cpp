@@ -43,12 +43,16 @@ TArray<UEquipment*> UFirm::GetEquipments() {
 	return equipments;
 }
 
-UEquipment* UFirm::GetEquipment(int32 index) {
-	return equipments[index];
-}
-
 void UFirm::RemoveEquipment(int32 index) {
 	equipments.RemoveAt(index);
+}
+
+void UFirm::RemoveLaw(int32 index) {
+	laws.RemoveAt(index);
+}
+
+void UFirm::RemoveSpiritBeast(int32 index) {
+	spiritBeasts.RemoveAt(index);
 }
 
 TArray<UCultivationLaw*> UFirm::GetLaws() {

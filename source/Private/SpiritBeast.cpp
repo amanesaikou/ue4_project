@@ -23,8 +23,30 @@ USpiritBeast::USpiritBeast() {
 	DecideContent();
 	DecidePassiveSkill();
 	DecideClass();
-	price = FMath::RandRange(10000, 30000);
+	DecidePrice();
 	bloodLineValue = 0;
+}
+
+void USpiritBeast::Load(FSB SB) {
+	attribute = SB.attribute;
+	passiveSkill = SB.passiveSkill;
+	star = SB.star;
+	blood = SB.blood;
+	grade = SB.grade;
+	price = SB.price;
+	bloodLineValue = SB.bloodLineValue;
+}
+
+FSB USpiritBeast::Save() {
+	FSB SB;
+	SB.attribute = attribute;
+	SB.passiveSkill = passiveSkill;
+	SB.star = star;
+	SB.blood = blood;
+	SB.grade = grade;
+	SB.price = price;
+	SB.bloodLineValue = bloodLineValue;
+	return SB;
 }
 
 void USpiritBeast::DecideContent() {
@@ -79,6 +101,15 @@ void USpiritBeast::DecideGrade() {
 		grade = 4;
 }
 
+void USpiritBeast::DecidePrice() {
+	TArray<int32> starPrices = { 1000, 4000, 8000, 20000, 50000 };
+	TArray<int32> gradePrices = { 3000, 8000, 40000, 100000};
+	int32 base = FMath::RandRange(5000, 8000);
+	base += starPrices[star-1];
+	base += gradePrices[grade-1];
+	price = base;
+}
+
 FString USpiritBeast::GetName() const {
 	return attribute.GetName();
 }
@@ -112,6 +143,7 @@ int32 USpiritBeast::GetFinallyDefense() const {
 }
 
 float USpiritBeast::GetBuff() const {
+	// 每星級+0.2倍 每等血脈+0.25倍 每階品級+0.3倍
 	return 1.0 + float(star) * 0.2 + float(blood) * 0.25 + float(grade) * 0.3;
 }
 
