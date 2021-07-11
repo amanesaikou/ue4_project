@@ -3,17 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "MyBPLibrary.h"
-#include "Item.h"
+#include "Engine/DataTable.h"
+#include "AllEnum.h"
 #include "SpiritBeast.generated.h"
-
 /**
  * 
  */
 
-
- // 
 USTRUCT(BlueprintType)
 struct FPassiveSkill : public FTableRowBase {
 
@@ -22,149 +18,59 @@ struct FPassiveSkill : public FTableRowBase {
 	// 建構子
 	FPassiveSkill();
 
-	EPassiveSkill GetPassiveSkill() const;
-
-	FString GetName() const;
-
-	int32 GetValue() const;
-
 	UPROPERTY(BlueprintReadWrite)
 	EPassiveSkill type;
 
 	UPROPERTY(BlueprintReadWrite)
-	FString name;
+	FText name;
+
+	UPROPERTY(BlueprintReadWrite)
+	FText effect;
 
 	UPROPERTY(BlueprintReadWrite)
 	int32 value;
 };
 
-// 儲存靈獸的結構
 USTRUCT(BlueprintType)
-struct FSB {
-	GENERATED_BODY()
-	FSB() {};
+struct FSpiritBeast : public FTableRowBase {
 
-	UPROPERTY(BlueprintReadWrite)
-	FCommonAttribute attribute;
-	UPROPERTY(BlueprintReadWrite)
-	FPassiveSkill passiveSkill;
-	UPROPERTY(BlueprintReadWrite)
-	int32 star;
-	UPROPERTY(BlueprintReadWrite)
-	int32 blood;
-	UPROPERTY(BlueprintReadWrite)
-	int32 grade;
-	UPROPERTY(BlueprintReadWrite)
-	int32 price;
-	UPROPERTY(BlueprintReadWrite)
-	int32 bloodLineValue;
-};
-
-// 靈獸
-UCLASS(BlueprintType)
-class DEVELOP_API USpiritBeast : public UObject {
 	GENERATED_BODY()
 
-public:
-	// 建構子
-	USpiritBeast();
+	FSpiritBeast();
 
-	void Load(FSB SB);
+	void SetPassive();
 
-	UFUNCTION(BlueprintCallable)
-	FSB Save();
+	void Setting();
 
-	// 設定資料
-	void DecideContent();
+	void Growth();
 
-	// 決定天賦
-	void DecidePassiveSkill();
+	bool IsDeath();
 
-	// 設定階級
-	void DecideClass();
+	UPROPERTY(BlueprintReadWrite)
+	int32 id;
 
-	// 決定星級
-	void DecideStar();
+	UPROPERTY(BlueprintReadWrite)
+	FText name;
 
-	// 決定品級
-	void DecideGrade();
+	UPROPERTY(BlueprintReadWrite)
+	FText content;
 
-	// 決定價錢
-	void DecidePrice();
+	UPROPERTY(BlueprintReadWrite)
+	int32 health;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取名字
-	FString GetName() const;
+	UPROPERTY(BlueprintReadWrite)
+	int32 attack;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取星級
-	int32 GetStar() const;
+	UPROPERTY(BlueprintReadWrite)
+	int32 defense;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取血脈等級
-	int32 GetBlood() const;
+	FPassiveSkill passive;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取品級
-	int32 GetGrade() const;
+	EGrowing growing;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取天賦
-	FPassiveSkill GetPassiveSkill() const;
+	EBlood blood;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終氣血
-	int32 GetFinallyHealth() const;
+	int32 age = 0;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終傷害
-	int32 GetFinallyAttack() const;
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終防禦
-	int32 GetFinallyDefense() const;
-
-	// 獲取增益效果
-	float GetBuff() const;
-
-	// 獲取天賦加成
-	int32 WhichPassiveSkill(int32 index) const;
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取出售價格
-	int32 GetPrice() const;
-
-	UFUNCTION(BlueprintCallable)
-	// 使用血脈丹
-	int32 UsePill(int32 value);
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取血脈值
-	int32 GetBloodLineValue() const;
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取升級至下一等血脈的需求值
-	int32 GetNextBloodValue() const;
-
-private:
-	// 屬性
-	FCommonAttribute attribute;
-
-	// 天賦
-	FPassiveSkill passiveSkill;
-
-	// 星級
-	int32 star;
-
-	// 血脈濃度
-	int32 blood;
-
-	// 品級
-	int32 grade;
-
-	// 價格 
-	int32 price;
-
-	// 血脈值
-	int32 bloodLineValue;
+	int32 price = 0;
 };

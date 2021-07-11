@@ -5,350 +5,142 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Disciple.h"
-#include "SpiritBeast.h"
 #include "Facility.h"
-#include "Firm.h"
-#include <functional> // std::functional
+#include "SpiritBeast.h"
+#include "Shop.h"
+#include "Async/AsyncWork.h"
 #include "Sect.generated.h"
 
 /**
  * 
  */
 
-
-// 門派
-UCLASS(BlueprintType)
-class DEVELOP_API USect : public UObject {
+USTRUCT(BlueprintType)
+struct FTreasure : public FTableRowBase {
 	GENERATED_BODY()
+	FTreasure() {};
+	UPROPERTY(BlueprintReadWrite)
+	int32 id;
+	UPROPERTY(BlueprintReadWrite)
+	FText name;
+	UPROPERTY(BlueprintReadWrite)
+	FText content;
+	UPROPERTY(BlueprintReadWrite)
+	FText effect;
+	UPROPERTY(BlueprintReadWrite)
+	ESectValue type;
+	UPROPERTY(BlueprintReadWrite)
+	int32 value;
+};
 
+UCLASS(BlueprintType)
+class DEVELOPVER1_API USect : public UObject {
+	GENERATED_BODY()
 public:
-
-	// 建構子
 	USect();
 
-	UFUNCTION(BlueprintCallable)
-	void Create();
+	void ReadLaws();
+
+	void ReadTreasures();
+
+	void ReadFacility();
+
+	void ReadElixirs();
 
 	UFUNCTION(BlueprintCallable)
-	void EveryYear();
-
-	void SetFacility();
+	void AddTreasure(FTreasure& t);
 
 	UFUNCTION(BlueprintCallable)
-	// 加入新的弟子
-	void AddEliteDisciple();
+	TArray<int32> GetFiveDisIndex();
 
 	UFUNCTION(BlueprintCallable)
-	// 招募弟子
-	void EmployEliteDisciple();
+	TArray<FDisciple> GetFiveDis(TArray<int32> index);
 
 	UFUNCTION(BlueprintCallable)
-	// 可以招募嗎
-	bool CanEmployDisciple();
+	TArray<FText> Explore();
 
-	UFUNCTION(BlueprintCallable)
-	// 驅逐弟子
-	void ExpelDisciple(int32 index);
+	void Update();
 
-	UFUNCTION(BlueprintCallable)
-	// 可以驅逐弟子嗎 驅逐弟子後物品會加回來 須檢查是否超過物品數量上限 
-	bool CanExpelDisciple(int32 index);
+	void Cultivate();
 
-	UFUNCTION(BlueprintCallable)
-	// 有足夠的靈石可以購買嗎
-	bool CanBuy(int32 price);
-
-	UFUNCTION(BlueprintCallable)
-	// 加入新的裝備
-	void AddEquipment();
-
-	UFUNCTION(BlueprintCallable)
-	// 加回弟子脫下的裝備或加入新的裝備
-	void AddRemoveEquipment(UEquipment* equipment);
-
-	UFUNCTION(BlueprintCallable)
-	// 購買商行出售的裝備
-	void BuyEquipment(UEquipment* equipment, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 可以加入裝備嗎
-	bool CanAddEquipment(UEquipment* equipment);
-
-	UFUNCTION(BlueprintCallable)
-	// 加入新的功法
-	void AddLaw();
-
-	UFUNCTION(BlueprintCallable)
-	// 購買商行出售的功法
-	void BuyLaw(UCultivationLaw* law, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 加入新的靈獸
-	void AddSpiritBeast();
-
-	UFUNCTION(BlueprintCallable)
-	// 可以加入新的靈獸嗎
-	bool CanAddSpiritBeast();
-
-	UFUNCTION(BlueprintCallable)
-	// 購買商行出售的靈獸
-	void BuySpiritBeast(USpiritBeast* SB, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 加回弟子放棄修練的功法或加入新的功法
-	void AddRemoveLaw(UCultivationLaw* law);
-
-	UFUNCTION(BlueprintCallable)
-	// 可以加入功法嗎
-	bool CanAddLaw(UCultivationLaw* law);
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有設施
-	TArray<FFacility> GetFacilities();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取設施
-	FFacility GetFacility(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有弟子
-	TArray<UEliteDisciple*> GetEliteDisciples();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有武器
-	TArray<UEquipment*> GetWeapons();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有法寶
-	TArray<UEquipment*> GetArtifacts();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有暗器
-	TArray<UEquipment*> GetHiddenWeapons();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有修練法
-	TArray<UCultivationLaw*> GetCultivationLaws();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有緞體法
-	TArray<UCultivationLaw*> GetWorkoutLaws();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有武技
-	TArray<UCultivationLaw*> GetAttackSkills();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取所有靈獸
-	TArray<USpiritBeast*> GetSpiritBeasts();
-
-	UFUNCTION(BlueprintCallable)
-	// 賣掉裝備
-	void SellEquipment(UEquipment* equipment, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除裝備
-	void RemoveEquipment(UEquipment* equipment, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除武器
-	void RemoveWeapon(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除法寶
-	void RemoveArtifact(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除暗器
-	void RemoveHiddenWeapon(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 賣掉功法
-	void SellLaw(UCultivationLaw* law, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除功法
-	void RemoveLaw(UCultivationLaw* law, int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除修煉法
-	void RemoveCultivationLaw(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除鍛體法
-	void RemoveWorkoutLaw(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 移除武技
-	void RemoveAttackSkill(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 出售靈獸
-	void SellSpiritBeast(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 設施可以升級嗎
-	bool CanFacilityLevelUp(int index, int32 cost);
-
-	UFUNCTION(BlueprintCallable)
-	// 設施升級
-	void FacilityLevelUp(int32 index, int32 cost, int32 value);
-
-	UFUNCTION(BlueprintCallable)
-	// 使用靈石
-	void UseSpiritStone(int32 cost);
-
-	UFUNCTION(BlueprintCallable)
-	// 使用藥材
-	void UseMedicinalMaterials(int32 cost);
-
-	UFUNCTION(BlueprintCallable)
-	// 使用血脈丹
-	void UseBloodlinePills(int32 cost);
-
-	// 計算屬性
-	void AddAttribute(int32& attribute, std::function<int32(UEliteDisciple*)> Get);
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終攻擊
-	int32 GetFinallyAttack();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終生命
-	int32 GetFinallyHealth();
-
-	UFUNCTION(BlueprintCallable)
-	// 獲取最終防禦
-	int32 GetFinallyDefense();
-
-	UFUNCTION(BlueprintCallable)
-	// 弟子排序
-	void DiscipleSort();
-
-	UFUNCTION(BlueprintCallable)
-	// 功法排序
-	void CultivationLawSort(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 裝備排序
-	void EquipmentSort(int32 index);
-
-	UFUNCTION(BlueprintCallable)
-	// 增加靈石
 	void AddSpiritStone(int32 num);
 
 	UFUNCTION(BlueprintCallable)
-	// 獲取靈石
-	int32 GetSpiritStone() const;
+	TMap<FElixirs, int32> MakeElixirs(int32 num);
 
-	UFUNCTION(BlueprintCallable)
-	// 增加藥材
-	void AddMedicinalMaterials(int32 num);
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FDisciple> disciples;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取藥材
-	int32 GetMedicinalMaterials() const;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FEquipment> weapons;
 
-	UFUNCTION(BlueprintCallable)
-	// 製作血脈丹
-	void MakeBloodlinePills(int32 num);
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FEquipment> artifacts;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取血脈丹
-	int32 GetBloodlinePills() const;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FEquipment> hiddenWeapons;
 
-	// 初始化商行
-	void CreateStore();
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FLaw> hadLaws;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取商行
-	UFirm* GetStrore() const;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FLaw> noGetLaws;
 
-	UFUNCTION(BlueprintCallable)
-	// 獲取log
-	TArray<FString> GetLogs() const;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FSpiritBeast> spiritBeasts;
 
-	UFUNCTION(BlueprintCallable)
-	// 清除log
-	void ClearLogs();
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FTreasure> hadTreasure;
 
-	UFUNCTION(BlueprintCallable)
-	void LoadLaws(TArray<FLaw> load, int32 mode);
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FTreasure> noGetTreasures;
 
-	UFUNCTION(BlueprintCallable)
-	void LoadEquipments(TArray<FEquip> load, int32 mode);
-
-	UFUNCTION(BlueprintCallable)
-	void LoadSpiritBeast(TArray<FSB> load);
-
-	UFUNCTION(BlueprintCallable)
-	void LoadDisciples(TArray<FDisciple> load);
-
-protected:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 弟子
-	TArray<UEliteDisciple*> eliteDisciples;
-
-	// uobject建立名稱數字
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32 eliteDiscipleNums = 0;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32 equipmentNums = 0;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32 lawNums = 0;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32 spiritBeastNums = 0;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 靈石
-	int32 spiritStone;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 藥材
-	int32 medicinalMaterials;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 血脈丹
-	int32 bloodlinePill;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 武器
-	TArray<UEquipment*> weapons;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 法寶
-	TArray<UEquipment*> artifacts;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 暗器
-	TArray<UEquipment*> hiddenWeapons;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 修煉法
-	TArray<UCultivationLaw*> cultivationLaws;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 鍛體法
-	TArray<UCultivationLaw*> workoutLaws;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 武技
-	TArray<UCultivationLaw*> attackSkills;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 靈獸
-	TArray<USpiritBeast*> spiritBeasts;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	// 設施
+	UPROPERTY(BlueprintReadWrite)
 	TArray<FFacility> facilities;
 
-	// 商行
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UFirm* store;
+	UPROPERTY(BlueprintReadWrite)
+	TMap<FElixirs, int32> elixirs;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<FString> logs;
+	UPROPERTY(BlueprintReadWrite)
+	int32 spiritStone = 0;
 
+	UPROPERTY(BlueprintReadWrite)
+	int32 medicinalMaterials = 0;
+
+	// 每年靈石收入
+	int32 ySpiritStone = 0;
+	// 每年藥材收入
+	int32 yMedicinalMaterials = 0;
+	//
+	int32 health = 0;
+	int32 attack = 0;
+	int32 defense = 0;
+	int32 speed = 0;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 level = 10;
+
+	UPROPERTY(BlueprintReadWrite)
+	FShop shop;
 };
 
+class SectAsyncTask : public FNonAbandonableTask {
+	friend class FAsyncTask<SectAsyncTask>;
+
+	USect* sect;
+
+	SectAsyncTask(USect* temp) : sect(temp) { }
+
+	void DoWork() {
+		int32 index = 0;
+		for (auto& i : sect->spiritBeasts) {
+			i.Growth();
+			if (i.IsDeath())
+				sect->spiritBeasts.RemoveAt(index);
+			else
+				++index;
+		}
+	}
+
+	FORCEINLINE TStatId GetStatId() const { RETURN_QUICK_DECLARE_CYCLE_STAT(ExampleAsyncTask, STATGROUP_ThreadPoolAsyncTasks); }
+};

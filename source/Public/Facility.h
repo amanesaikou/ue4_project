@@ -5,12 +5,10 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "Facility.generated.h"
-
 /**
  * 
  */
 
- // 設施
 USTRUCT(BlueprintType)
 struct FFacility : public FTableRowBase {
 
@@ -19,27 +17,26 @@ struct FFacility : public FTableRowBase {
 	// 建構子
 	FFacility();
 
+	// 獲取升級花費
+	int32 GetLevelUpCost();
+
+	bool IsLevelMax();
+
 	void LevelUp();
 
-	bool CanLevelUp();
-
-	void SetValue(int32 newValue);
-
-	FString GetName() const;
-
-	int32 GetValue() const;
-
-	int32 GetLevel() const;
+	void Update();
 
 	UPROPERTY(BlueprintReadWrite)
-	FString name;
+	FText name;
 
 	UPROPERTY(BlueprintReadWrite)
-	FString introduction;
+	FText introduction;
 
 	UPROPERTY(BlueprintReadWrite)
 	int32 value;
 
 	UPROPERTY(BlueprintReadWrite)
 	int32 level;
+
+	bool hasLevelUp = false;
 };

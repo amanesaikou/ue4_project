@@ -4,29 +4,23 @@
 #include "Facility.h"
 
 FFacility::FFacility() {
-	value = 0;
+
+}
+
+int32 FFacility::GetLevelUpCost() {
+	// 靈石花費每一等+1000
+	return (level + 1) * 1000;
+}
+
+bool FFacility::IsLevelMax() {
+	return level == 10 ? true : false;
 }
 
 void FFacility::LevelUp() {
-	level += 1;
+	++level;
+	hasLevelUp = true;
 }
 
-bool FFacility::CanLevelUp() {
-	return level == 10 ? false : true;
-}
-
-void FFacility::SetValue(int32 newValue) {
-	value = newValue;
-}
-
-FString FFacility::GetName() const {
-	return name;
-}
-
-int32 FFacility::GetValue() const {
-	return value;
-}
-
-int32 FFacility::GetLevel() const {
-	return level;
+void FFacility::Update() {
+	hasLevelUp = false;
 }
